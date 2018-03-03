@@ -1,0 +1,61 @@
+
+@font-face {
+    font-family: "opensans-regular";
+    src: url("../../fonts/OpenSans-Regular.ttf");
+}
+@font-face {
+    font-family: "alegreya-regular";
+    src: url("../../fonts/Alegreya-Regular.ttf");
+}
+
+@font-face {
+    font-family: "alegreya-medium";
+    src: url("../../fonts/Alegreya-Medium.ttf");
+}
+
+body {
+    font-family: "opensans-regular";
+    background-image: url("../../style/img/fond.png");
+    opacity: 0.9;
+}
+
+header {
+    background-color: white;
+}
+#app-name {
+    color: #003333;
+    padding-left: 30px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+#menu a {
+    color: #1b1e21;
+}
+
+#menu .nav-item  {
+    margin: 10px;
+    border: solid #000000 2px;
+}
+
+#menu .active {
+    background-color: #003333;
+    color: white;
+}
+
+body {
+    background-color: transparent;
+}
+
+#menu .navbar {
+    display: inline-block;
+}
+
+.separator {
+    border: 1px solid  #003333;
+}
+
+input:focus{
+    box-shadow: 0 0 3px  #003333 !important;
+}
+
+
