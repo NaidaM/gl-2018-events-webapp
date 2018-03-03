@@ -59,3 +59,18 @@ input:focus{
 }
 
 
+#footer{
+    background-color: #003333;
+    height: 40px;
+    color: white;
+    font-weight: bold;
+    padding: 8px;
+
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#copyright {
+    text-align: center;
+}
