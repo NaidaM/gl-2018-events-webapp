@@ -14,7 +14,7 @@
 }
 
 body {
-    font-family: "opensans-regular";
+    font-family: "alegreya-regular";
     background-image: url("../../style/img/fond.png");
     opacity: 0.9;
 }
@@ -27,6 +27,9 @@ header {
     padding-left: 30px;
     margin-top: 10px;
     font-weight: bold;
+}
+#menu {
+    line-height: 1.2em;
 }
 #menu a {
     color: #1b1e21;
@@ -61,11 +64,13 @@ input:focus{
 
 #footer{
     background-color: #003333;
+
     height: 40px;
     color: white;
     font-weight: bold;
     padding: 8px;
 
+    margin-top: 100px;
     position: fixed;
     bottom: 0;
     width: 100%;
