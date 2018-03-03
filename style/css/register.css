@@ -1,4 +1,4 @@
-#login-area {
+#register-area {
     background-color: white;
     opacity: 1;
     margin: 0 auto;
@@ -8,18 +8,18 @@
     border-radius: 5px 5px 10px 10px ;
 }
 
-#login-area .form-control {
+#register-area .form-control {
     margin-bottom: 8px;
     border: 2px solid  #1b1e21;
 }
-#login-area .form-check{
+#register-area .form-check{
     margin-bottom: 8px;
 }
 
-#login-area button{
+#register-area button{
     margin-bottom: 8px;
 }
-#login-area .form-check-label{
+#register-area .form-check-label{
     color: #000000;
     font-size: 16px;
 }
@@ -29,26 +29,22 @@
     font-weight: bold;
 }
 
-.login-form-title {
+.register-form-title {
     margin-top: 10px;
     margin-left: 5px;
     margin-bottom: 40px;
 }
 
-.login-form-title h3 {
+.register-form-title h3 {
     margin-top: 8px;
     padding-left: 8px;
     color: #003333;
     font-weight: bold;
 }
 
-#register {
-    color: #1d2124;
-    text-decoration: #1d2124 underline;
-}
 
-#forgot-pwd {
-    color: darkblue;
-    margin-left: 65px;
-    text-decoration: darkblue underline;
+.register-form-title {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 40px;
 }

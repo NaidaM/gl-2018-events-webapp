@@ -74,3 +74,61 @@ input:focus{
 #copyright {
     text-align: center;
 }
+
+.event-map{
+    box-shadow: 0 0 5px #000000 !important;
+}
+
+.map-author{
+    color: #1b1e21;
+    font-size: 18px;
+    text-align: right;
+}
+.badge-tag {
+    color: #fff;
+    font-weight: bolder;
+    padding: 5px;
+    background-color: #10707f;
+}
+
+.details-link{
+    color: darkblue;
+    text-decoration: underline;
+}
+
+.card-title {
+    color: black;
+    font-size: 18px;
+}
+
+@media (min-width: 1200px){
+    .event-map {
+        width: 17em;
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1198px){
+    .event-map {
+        width: 14em;
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 450px) and (max-width: 991px){
+    .event-map {
+        width: 14em;
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 450px){
+    .event-map {
+        width: 17em;
+        margin-top: 20px;
+    }
+}
+
+.maps {
+    margin-bottom: 50px;
+}
