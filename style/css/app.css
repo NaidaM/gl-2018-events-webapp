@@ -14,13 +14,14 @@
 }
 
 body {
-    font-family: "opensans-regular";
+    font-family: "alegreya-regular";
     background-image: url("../../style/img/fond.png");
     opacity: 0.9;
 }
 
 header {
-    background-color: white;
+    background-color: indianred;
+	margin-bottom:6px;
 }
 #app-name {
     color: #003333;
@@ -28,8 +29,12 @@ header {
     margin-top: 10px;
     font-weight: bold;
 }
+#menu {
+    line-height: 1.2em;
+}
 #menu a {
-    color: #1b1e21;
+    color: #003333;
+    font-weight: bold;
 }
 
 #menu .nav-item  {
@@ -40,6 +45,7 @@ header {
 #menu .active {
     background-color: #003333;
     color: white;
+    font-weight: normal;
 }
 
 body {
@@ -61,11 +67,13 @@ input:focus{
 
 #footer{
     background-color: #003333;
+
     height: 40px;
     color: white;
     font-weight: bold;
     padding: 8px;
 
+    margin-top: 100px;
     position: fixed;
     bottom: 0;
     width: 100%;
