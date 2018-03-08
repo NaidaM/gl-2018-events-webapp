@@ -10,18 +10,30 @@
 <body>
 
 <header>
- <div class="container">
+ 
+ <div class="container-fluid">
   <nav id="menu" class="navbar navbar-light">
    <div style="display: inline">
-    <img src="style/img/logo.png" height="80" width="60" >
+    <img src="style/img/logo.png" height="60" width="46">
     <h4 style="display: inline" id="app-name">Events Location</h4>
    </div>
-   <ul class="nav ">
+   
+		
+	<div class="input-group-prepend">
+	<input type="text" class="form-control" placeholder="Look for a map...">
+		<div class="input-group-append">
+		<button type="button" class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>    
+		</div>
+	</div>
+	<ul class="nav ">
     <li class="nav-item">
      <a class="nav-link" href="index.html">Home</a>
     </li>
     <li class="nav-item">
      <a class="nav-link" href="public.html">Public area</a>
+    </li>
+    <li class="nav-item">
+     <a class="nav-link" href="my_maps.html">My maps</a>	
     </li>
     <li class="nav-item">
      <a class="nav-link" href="register.html">Register</a>
@@ -40,7 +52,6 @@
     </li>-->
    </ul>
   </nav>
-  <hr class="separator"/>
  </div>
 </header>
 
@@ -80,7 +91,7 @@
   </div>
   <div class="row justify-content-end">
    <div class="col-sm-2">
-    <a href="#" id="register">register</a>
+    <a href="register.html" id="register">register</a>
    </div>
 
    <div class="col-sm-9 ">

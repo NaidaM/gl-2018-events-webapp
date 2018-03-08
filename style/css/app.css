@@ -13,19 +13,46 @@
     src: url("../../fonts/Alegreya-Medium.ttf");
 }
 
+html{
+	height:100%;
+}
 body {
-    font-family: "alegreya-regular";
-    background-image: url("../../style/img/fond.png");
-    opacity: 0.9;
+	height: 100%;
+    margin: 0;
+	background: rgb(255,252,252); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(255,252,252,1) 0%, rgba(240,247,232,1) 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, rgba(255,252,252,1) 0%,rgba(240,247,232,1) 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, rgba(255,252,252,1) 0%,rgba(240,247,232,1) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fffcfc', endColorstr='#f0f7e8',GradientType=0 ); /* IE6-9 */
 }
 
 header {
-    background-color: indianred;
+    background-color: darkseagreen;
 	margin-bottom:6px;
 }
+
+header .form-control{
+	border-radius: 5px 0 0 5px;
+	width: 100%;
+}
+
+header .input-group-prepend{
+	width: 35%;
+	
+}
+
+header .btn-outline-secondary {
+	color: white;
+	font-size: 20px;
+	border-radius: 0 5px 5px 0;
+}
+header .btn-outline-secondary:hover {
+    background-color: #007c5b;
+}
+
 #app-name {
     color: #003333;
-    padding-left: 30px;
+    padding-left: 10px;
     margin-top: 10px;
     font-weight: bold;
 }
@@ -36,16 +63,26 @@ header {
     color: #003333;
     font-weight: bold;
 }
-
+header .container-fluid{
+	padding:0 0 0 8px ;
+}
 #menu .nav-item  {
-    margin: 10px;
-    border: solid #000000 2px;
+    margin: 3px;
+    /* border: solid #000000 1px; */
+	/* border-radius: 5px; */
 }
 
 #menu .active {
     background-color: #003333;
     color: white;
     font-weight: normal;
+	border-radius: 5px; 
+}
+
+#menu a:hover  {
+	color:#f4fffc;
+    /* background-color:#79968e; */
+	border-radius: 5px; 
 }
 
 body {
@@ -55,7 +92,9 @@ body {
 #menu .navbar {
     display: inline-block;
 }
-
+.navbar {
+	padding: 2px 0 2px 0 ;
+}
 .separator {
     border: 1px solid  #003333;
 }

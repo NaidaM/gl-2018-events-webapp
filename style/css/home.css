@@ -1,6 +1,13 @@
+
+.text-title {
+    padding-top: 50px;
+    padding-left: 50px;
+
+}
+
 .p-section {
     background-color: white;
-    margin-top: -15px;
+    margin-top: 0px;
 }
 
 .p-text {
@@ -15,7 +22,7 @@
     border-radius: 50%;
     width: 200px;
     height: 200px;
-    border: #003333 4px solid;
+    /*border: #003333 4px solid;*/
     text-align: center;
 
     /* width and height can be anything, as long as they're equal */
@@ -40,7 +47,6 @@
     z-index: 10;
     width: 200px;
     font-weight: bold;
-    border: #003333 solid 3px;
 }
 
 .service hr{

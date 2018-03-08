@@ -1,8 +1,12 @@
 #register-area {
     background-color: white;
+	position:absolute;
+    left: 50%;
+    top: 40%;
+    margin-left: -225px; 
+    margin-top: -195px;
     opacity: 1;
-    margin: 0 auto;
-    width: 350px;
+    width: 450px;
     height: 390px;
     border: #003333 2px solid;
     border-radius: 5px 5px 10px 10px ;

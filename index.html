@@ -2,26 +2,39 @@
 <html lang="en">
 <head>
  <meta charset="UTF-8">
+ <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
  <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
  <link rel="stylesheet" href="style/css/app.css" />
  <link rel="stylesheet" href="style/css/home.css" />
- <title>Login </title>
+ <title>Index</title>
 </head>
 <body>
 
 <header>
- <div class="container">
+ <div class="container-fluid">
   <nav id="menu" class="navbar navbar-light">
    <div style="display: inline">
-    <img src="style/img/logo.png" height="80" width="60" >
+    <img src="style/img/logo.png" height="60" width="46" >
     <h4 style="display: inline" id="app-name">Events Location</h4>
    </div>
-   <ul class="nav ">
+   
+		
+	<div class="input-group-prepend">
+	<input type="text" class="form-control" placeholder="Look for a map...">
+		<div class="input-group-append">
+		<button type="button" class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>    
+		</div>
+	</div>
+
+   <ul class="nav">
     <li class="nav-item">
      <a class="nav-link active" href="index.html">Home</a>
     </li>
     <li class="nav-item">
      <a class="nav-link" href="public.html">Public area</a>
+    </li>	
+    <li class="nav-item">
+     <a class="nav-link" href="my_maps.html">My maps</a>
     </li>
     <li class="nav-item">
      <a class="nav-link " href="register.html">Register</a>
@@ -40,7 +53,6 @@
     </li>-->
    </ul>
   </nav>
-  <hr class="separator"/>
  </div>
 </header>
 <div class="p-section">
@@ -48,7 +60,10 @@
 
  <div id="presentation">
   <div class="row">
-   <div class="col-md-7">
+   <div class="col-md-12">
+	<div class="text-title">
+		<p class="h2">App_name : your personnal maps</p>
+	</div>
     <p class="p-text"> "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -57,9 +72,6 @@
      fugiat nulla pariatur. Excepteur sint occaecat cupidatat
      non proident, sunt in culpa qui officia deserunt mollit anim id
      est laborum." </p>
-   </div>
-   <div class="col-md-5">
-    <img src="style/img/events.png" style="height: 250px;width: 70%;">
    </div>
   </div>
  </div>
@@ -77,21 +89,21 @@
      <div class="col-lg-4">
 
         <div class="service-item">
-         <img src="style/img/add_map_icon.png">
+         <img src="style/img/add-map-icon.png">
         </div>
-       <h2>Create map</h2>
+       <h2>Create your maps</h2>
      </div>
       <div class="col-lg-4">
        <div class="service-item">
-        <img src="style/img/add_place.png">
+        <img src="style/img/add-place.png">
        </div>
-       <h2>Add Place</h2>
+       <h2>Mark your favorite places</h2>
      </div>
    <div class="col-lg-4">
        <div class="service-item">
         <img src="style/img/share_map.png">
        </div>
-      <h2>Share with friend</h2>
+      <h2>Share with your friends</h2>
      </div>
   </div>
 
