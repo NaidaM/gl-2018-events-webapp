@@ -1,1 +1,35 @@
 #mapid { height: 65vh; }
+
+.contmaps {
+	overflow: auto;
+	overflow-y: hidden;
+	height: 20vh;
+}
+
+.card-img-top {
+	height:70px;
+}
+
+.card-body{
+	height:10px;
+}
+
+
+.row {
+	margin:0;
+}
+
+.maps {
+	width:100%;
+}
+
+#addmap {
+	font-size: 35px;
+	padding: 2px;
+	width: 58px;
+	margin: auto 3px;
+	border-radius: 50%;
+	background-color: silver;
+	text-align: center;
+	color:white;
+}
