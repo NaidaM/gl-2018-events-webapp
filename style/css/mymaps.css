@@ -1,5 +1,28 @@
 #mapid { height: 65vh; }
 
+.markContainer {
+	text-align: center;
+}
+
+.addedbtn {
+	margin : 4px;
+}
+
+.markContainer > button{
+	font-size: 13px;
+	margin-top:10px;
+	width: 100px;
+}
+
+label {
+    width: 100%;
+    margin: 6px 0;
+}
+
+textarea {
+   resize: none;
+}
+
 .contmaps {
 	overflow: auto;
 	overflow-y: hidden;

@@ -62,6 +62,8 @@
 
 <div class="container-fluid">
 	<div id="mapid"></div>
+	<div id="markplace">	
+	</div>
 
   <div class="row maps">
   
@@ -69,7 +71,7 @@
 	<button type="button" class="btn btn-light" id="addmap">+</button>
 
 	<div class="col-sm row contmaps">
-		<div class="col-lg-3">
+		<div class="col-lg-2">
 		 <div class="card event-map" >
 		  <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
 		  <div class="card-body">
@@ -78,7 +80,7 @@
 		 </div>
 		</div>
 
-	   <div class="col-lg-3">
+	   <div class="col-lg-2">
 		<div class="card event-map" >
 		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
 		 <div class="card-body">
@@ -87,7 +89,31 @@
 		</div>
 	   </div>
 
-	   <div class="col-lg-3">
+	   <div class="col-lg-2">
+		<div class="card event-map " >
+		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
+		 <div class="card-body">
+		  <h5 class="card-title">My 3rd Map</h5>
+		 </div>
+		</div>
+	   </div>
+	   <div class="col-lg-2">
+		<div class="card event-map " >
+		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
+		 <div class="card-body">
+		  <h5 class="card-title">My 3rd Map</h5>
+		 </div>
+		</div>
+	   </div>
+	   <div class="col-lg-2">
+		<div class="card event-map " >
+		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
+		 <div class="card-body">
+		  <h5 class="card-title">My 3rd Map</h5>
+		 </div>
+		</div>
+	   </div>
+	   <div class="col-lg-2">
 		<div class="card event-map " >
 		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
 		 <div class="card-body">
@@ -111,32 +137,90 @@
 		.openPopup();
 		
 	function createButton(label, container) {
-    var btn = L.DomUtil.create('button', '', container);
+    var btn = L.DomUtil.create('button', 'addedbtn', container);
     btn.setAttribute('type', 'button');
     btn.innerHTML = label;
     return btn;
-	}
-
+	}	
+			
 	map.on('click', function(e) {
 		var container = L.DomUtil.create('div'),
-			markBtn = createButton('Mark place', container),
-			startBtn = createButton('Start from this location', container),
-			destBtn = createButton('Go to this location', container);
-	
-		L.DomEvent.on(startBtn, 'click', function() {
-			control.spliceWaypoints(0, 1, e.latlng);
-			map1.closePopup();
-		});
-		 L.DomEvent.on(destBtn, 'click', function() {
-			control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
-			map1.closePopup();
-		});
+			contMark = L.DomUtil.create('div'),
+			markBtn = createButton('Mark place', contMark);
+		contMark.className = "markContainer";
+		container.appendChild(contMark);
 		
-
+		var contLoc = L.DomUtil.create('div'),
+		startBtn = createButton('Start from this location', contLoc), 
+		destBtn = createButton('Go to this location', contLoc); 
+		container.appendChild(contLoc);
+			
+		<!-- L.DomEvent.on(startBtn, 'click', function() { -->
+			<!-- control.spliceWaypoints(0, 1, e.latlng); -->
+			<!-- map.closePopup(); -->
+		<!-- }); -->
+		
+		<!-- L.DomEvent.on(destBtn, 'click', function() { -->
+			<!-- control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng); -->
+			<!-- map.closePopup(); -->
+		<!-- }); -->
+				
+		L.DomEvent.on(markBtn, 'click', function() {
+			var contName = document.createElement("div");
+			var labelName = document.createElement("label");
+			labelName.innerHTML = "Place name";
+			contName.appendChild(labelName);
+			var inputName = document.createElement("input");
+			inputName.type = "text";	
+			contName.appendChild(inputName);
+			container.appendChild(contName);
+			
+			var contMsg = document.createElement("div");
+			var label = document.createElement("label");
+			label.innerHTML = "Message";
+			contMsg.appendChild(label);
+			var inputMsg = document.createElement("textarea");
+			inputMsg.rows = "4";
+			inputMsg.maxLength = "160";
+			inputMsg.cols = "35";
+			contMsg.appendChild(inputMsg);
+			container.appendChild(contMsg);
+			
+			var contPict = document.createElement("div");
+			label = document.createElement("label");
+			label.innerHTML = "Pictures";
+			contPict.appendChild(label);			
+			input = document.createElement("input");
+			input.type = "file";
+			contPict.appendChild(input);	
+			container.appendChild(contPict);
+			
+			var contValid = L.DomUtil.create('div'),
+			okBtn = createButton('Validate', contValid); 
+			contValid.className = "markContainer";
+			container.appendChild(contValid);
+			
+			L.DomEvent.on(okBtn, 'click', function() {
+				if (inputName.value != "") {   
+					L.marker(e.latlng).addTo(map)
+					.bindPopup(inputName.value+"<br />"+inputMsg.value)
+					.openPopup();
+				}
+				else {					
+					labelName.style.color = "red";
+					labelName.innerHTML = "Place name (essential)"
+				}
+			});
+		
+			markBtn.style.display = 'none';
+		}); 
+			
+		   
 		L.popup()
 			.setContent(container)
 			.setLatLng(e.latlng)
         .openOn(map);
+				
 	});
 	L.Routing.control({
 		waypoints: [
