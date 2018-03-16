@@ -58,7 +58,10 @@
 </header>
 
 <div id="register-area">
-    <form >
+	<div class="alert alert-danger error" role="alert" style="display: none">
+	  This is a danger alert—check it out!
+	</div>
+    <form id="form-register" action='#'>
         <div class="row justify-content-center register-form-title">
             <div class="col-sm-2">
                 <img src="style/img/user_icon.png" height="45" width="45" >
@@ -70,29 +73,25 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-sm-10">
-                <input class="form-control" type="text" placeholder="Pseudo " name="pseudo">
+                <input class="form-control" type="text" placeholder="Pseudo " name="pseudo" id="idpseudo">
             </div>
             <div class="col-sm-10">
-                <input   class="form-control" type="text" placeholder="Email" name="password">
+                <input   class="form-control" type="text" placeholder="Email" name="mail" id="idmail">
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col-sm-10">
-                <input class="form-control" type="password" placeholder="password " name="pseudo">
+                <input class="form-control" type="password" placeholder="password" name="pwd" id="idpwd">
             </div>
             <div class="col-sm-10">
-                <input   class="form-control" type="password" placeholder="confirm password" name="password">
+                <input   class="form-control" type="password" placeholder="confirm password" name="confpwd" id="idconf">
             </div>
         </div>
 
-
-
-
-
         <div class="row justify-content-center">
             <div class="col-sm-10">
-                <button class="btn btn-block btn-event"> Sign up </button>
+                <button class="btn btn-block btn-event" id="idValBtn"> Sign up </button>
             </div>
         </div>
 
@@ -108,5 +107,7 @@
     </div>
 </footer>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script defer src="script/auth.js"></script>
 </body>
 </html>

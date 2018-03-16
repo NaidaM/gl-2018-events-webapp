@@ -12,7 +12,7 @@
  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
  <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
  <link rel="stylesheet" href="style/css/app.css" />
  <link rel="stylesheet" href="style/css/mymaps.css" />
@@ -82,7 +82,15 @@
 	</div>
 	
 	
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+ 
+	
+	<button type="button" class="btn btn-light" id="addmap">-</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
  <script type="text/javascript">
 	
@@ -93,10 +101,6 @@
 		dots: true
 	});
   </script>
-	
-	<button type="button" class="btn btn-light" id="addmap">-</button>
-  </div>
-</div>
 <script>
 	var map = L.map('mapid').setView([48.85, 2.35], 13);
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -108,10 +112,10 @@
 		.openPopup();
 		
 	function createButton(label, container) {
-    var btn = L.DomUtil.create('button', 'addedbtn', container);
-    btn.setAttribute('type', 'button');
-    btn.innerHTML = label;
-    return btn;
+		var btn = L.DomUtil.create('button', 'addedbtn', container);
+		btn.setAttribute('type', 'button');
+		btn.innerHTML = label;
+		return btn;
 	}	
 			
 	map.on('click', function(e) {
@@ -237,5 +241,7 @@
  </div>
 </footer>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script defer src="script/my_maps.js"></script>
 </body>
 </html>

@@ -57,7 +57,11 @@
 </header>
 
 <div id="login-area">
- <form >
+ <div class="alert alert-danger error" role="alert" style="display: none">
+	This is a danger alert—check it out!
+ </div>
+  
+  <form id="form-login"  action='#'>
   <div class="row justify-content-center login-form-title">
    <div class="col-sm-2">
     <img src="style/img/lock.png" height="50" width="50" >
@@ -69,10 +73,10 @@
   </div>
   <div class="row justify-content-center">
    <div class="col-sm-10">
-    <input class="form-control" type="text" placeholder="Pseudo " name="pseudo">
+    <input class="form-control" type="text" placeholder="Pseudo " name="pseudo" id="idpseudo">
    </div>
    <div class="col-sm-10">
-    <input   class="form-control" type="password" placeholder="Password" name="password">
+    <input   class="form-control" type="password" placeholder="Password" name="password" id="idpwd">
    </div>
   </div>
   <div class="row justify-content-center">
@@ -87,7 +91,7 @@
   </div>
   <div class="row justify-content-center">
    <div class="col-sm-10">
-    <button class="btn btn-block btn-event"> Sign in </button>
+    <button class="btn btn-block btn-event" id="idValBtn"> <img src = "style/img/loading.gif" id="load" style= "display:none; height: 30px; width: 30px; margin: 0 auto" /> <span class="loadBtnText"> Log in </span></button>
    </div>
   </div>
   <div class="row justify-content-end">
@@ -114,5 +118,7 @@
 </footer>
 
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script defer src="script/auth.js"></script>
 </body>
 </html>
