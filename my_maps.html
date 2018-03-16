@@ -11,7 +11,8 @@
    crossorigin=""></script>
  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
  <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
  <link rel="stylesheet" href="style/css/app.css" />
  <link rel="stylesheet" href="style/css/mymaps.css" />
@@ -64,66 +65,36 @@
 	<div id="mapid"></div>
 	<div id="markplace">	
 	</div>
-
-  <div class="row maps">
+	
+  <div class="row"> 
   
-	<button type="button" class="btn btn-secondary"><</button>
 	<button type="button" class="btn btn-light" id="addmap">+</button>
 
-	<div class="col-sm row contmaps">
-		<div class="col-lg-2">
-		 <div class="card event-map" >
-		  <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
-		  <div class="card-body">
-		   <h5 class="card-title">My 1st Map</h5>
-		  </div>
-		 </div>
-		</div>
-
-	   <div class="col-lg-2">
-		<div class="card event-map" >
-		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
-		 <div class="card-body">
-		  <h5 class="card-title">My 2nd Map</h5>
-		 </div>
-		</div>
-	   </div>
-
-	   <div class="col-lg-2">
-		<div class="card event-map " >
-		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
-		 <div class="card-body">
-		  <h5 class="card-title">My 3rd Map</h5>
-		 </div>
-		</div>
-	   </div>
-	   <div class="col-lg-2">
-		<div class="card event-map " >
-		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
-		 <div class="card-body">
-		  <h5 class="card-title">My 3rd Map</h5>
-		 </div>
-		</div>
-	   </div>
-	   <div class="col-lg-2">
-		<div class="card event-map " >
-		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
-		 <div class="card-body">
-		  <h5 class="card-title">My 3rd Map</h5>
-		 </div>
-		</div>
-	   </div>
-	   <div class="col-lg-2">
-		<div class="card event-map " >
-		 <img class="card-img-top" src="style/img/map.png" alt="Card image cap">
-		 <div class="card-body">
-		  <h5 class="card-title">My 3rd Map</h5>
-		 </div>
-		</div>
-	   </div>
-   </div>
-
-	<button type="button" class="btn btn-secondary">></button>
+	<div class="contmaps slider slider-nav">
+		<div><h4 class="mapLabel">Map 1</h4></div>
+		<div><h4 class="mapLabel">Map 2</h4></div>
+		<div><h4 class="mapLabel">3</h4></div>
+		<div><h4 class="mapLabel">4</h4></div>
+		<div><h4 class="mapLabel">5</h4></div>
+		<div><h4 class="mapLabel">6</h4></div>
+		<div><h4 class="mapLabel">7</h4></div>
+		<div><h4 class="mapLabel">8</h4></div>
+	</div>
+	
+	
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+ <script type="text/javascript">
+	
+	$('.contmaps').slick({
+		infinite: true,
+		slidesToShow: 5,
+		slidesToScroll: 2,
+		dots: true
+	});
+  </script>
+	
+	<button type="button" class="btn btn-light" id="addmap">-</button>
   </div>
 </div>
 <script>
@@ -167,18 +138,16 @@
 				
 		L.DomEvent.on(markBtn, 'click', function() {
 			var contName = document.createElement("div");
-			var labelName = document.createElement("label");
+			var labelName = L.DomUtil.create("label",'labelTitle',contName);
 			labelName.innerHTML = "Place name";
-			contName.appendChild(labelName);
 			var inputName = document.createElement("input");
 			inputName.type = "text";	
 			contName.appendChild(inputName);
 			container.appendChild(contName);
 			
 			var contMsg = document.createElement("div");
-			var label = document.createElement("label");
+			var label = L.DomUtil.create("label",'labelTitle',contMsg);
 			label.innerHTML = "Message";
-			contMsg.appendChild(label);
 			var inputMsg = document.createElement("textarea");
 			inputMsg.rows = "4";
 			inputMsg.maxLength = "160";
@@ -190,9 +159,9 @@
 			label = document.createElement("label");
 			label.innerHTML = "Pictures";
 			contPict.appendChild(label);			
-			input = document.createElement("input");
-			input.type = "file";
-			contPict.appendChild(input);	
+			var pic = document.createElement("input");
+			pic.type = "file";
+			contPict.appendChild(pic);	
 			container.appendChild(contPict);
 			
 			var contValid = L.DomUtil.create('div'),
@@ -201,10 +170,38 @@
 			container.appendChild(contValid);
 			
 			L.DomEvent.on(okBtn, 'click', function() {
+				<!-- var file = pic.files[0]; -->
+				<!-- var reader  = new FileReader(); -->
+				<!-- reader.onload = function(e)  { -->
+					<!-- var image; -->
+					<!-- image = document.createElement("img"); -->
+					<!-- image.src = e.target.result; -->
+					<!-- image.style.width = '50%' -->
+					<!-- image.style.height = 'auto' -->
+					<!-- container.appendChild(image); -->
+				<!-- } -->
+				<!-- reader.readAsDataURL(file); -->
 				if (inputName.value != "") {   
+					var newPopup = L.DomUtil.create('div');
+					var n = L.DomUtil.create('div');
+					n.style.textAlign = "center";
+					var titlePop = L.DomUtil.create('label', '', n);
+					titlePop.innerHTML = "<b>"+inputName.value+"</b>";
+					newPopup.appendChild(n);
+					var m = L.DomUtil.create('div');
+					var msgPop = L.DomUtil.create('label', '', m);
+					msgPop.innerHTML = inputMsg.value+"<br />";
+					newPopup.appendChild(m);
+					var seePicsBtn = L.DomUtil.create('button','',newPopup);
+					seePicsBtn.innerHTML = "See photos";
+					var p = L.popup()
+							.setContent(newPopup)
+							.setLatLng(e.latlng);
 					L.marker(e.latlng).addTo(map)
-					.bindPopup(inputName.value+"<br />"+inputMsg.value)
-					.openPopup();
+					.bindPopup(p) 
+					.openPopup(); 
+					
+					
 				}
 				else {					
 					labelName.style.color = "red";
@@ -228,6 +225,8 @@
 			L.latLng(48.1, 2.36)
 		]
 	}).addTo(map);
+	
+	
 </script>
 
 <footer id="footer">
