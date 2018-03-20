@@ -41,16 +41,21 @@ textarea {
     text-align: center;
 }
 
+.row {
+	margin-left: 0;
+	margin-right:0;
+}
+
 .maps {
 	width:100%;
 }
 
 #addmap {
-	font-size: 35px;
-	padding: 2px;
+	font-size: 20px;
+	padding: 6px;
 	width: 58px;
 	margin: auto 3px;
-	border-radius: 50%;
+	border-radius: 9px;
 	background-color: silver;
 	text-align: center;
 	color:white;
