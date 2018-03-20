@@ -80,19 +80,36 @@
 		<div><h4 class="mapLabel">7</h4></div>
 		<div><h4 class="mapLabel">8</h4></div>
 	</div>
-	
-	
- 
-	
+		
 	<button type="button" class="btn btn-light" id="addmap">-</button>
+  </div>
+</div>
+
+<div class="modal fade" role="dialog" id="photosModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Photos manager</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBodyPic">
+		<img src="style/img/add-camera.png" height="60" width="60" style="border: #c5c5c5 2px dashed; padding: 4px; border-radius:4px">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
- <script type="text/javascript">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script type="text/javascript">
 	
 	$('.contmaps').slick({
 		infinite: true,
@@ -100,7 +117,7 @@
 		slidesToScroll: 2,
 		dots: true
 	});
-  </script>
+</script>
 <script>
 	var map = L.map('mapid').setView([48.85, 2.35], 13);
 	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -174,17 +191,20 @@
 			container.appendChild(contValid);
 			
 			L.DomEvent.on(okBtn, 'click', function() {
-				<!-- var file = pic.files[0]; -->
-				<!-- var reader  = new FileReader(); -->
-				<!-- reader.onload = function(e)  { -->
-					<!-- var image; -->
-					<!-- image = document.createElement("img"); -->
-					<!-- image.src = e.target.result; -->
-					<!-- image.style.width = '50%' -->
-					<!-- image.style.height = 'auto' -->
-					<!-- container.appendChild(image); -->
-				<!-- } -->
-				<!-- reader.readAsDataURL(file); -->
+				var file = pic.files[0]; 
+				if (file != null) { 
+					var reader  = new FileReader();
+					reader.onload = function(e)  { 
+						var image; 
+						image = document.createElement("img"); 
+						image.src = e.target.result; 
+						<!-- image.style.width = '50%' -->
+						image.style.maxHeight = '200px' 
+						
+						document.querySelector("#modalBodyPic").appendChild(image); 
+						reader.readAsDataURL(file);			
+					}
+				} 
 				if (inputName.value != "") {   
 					var newPopup = L.DomUtil.create('div');
 					var n = L.DomUtil.create('div');
@@ -192,19 +212,24 @@
 					var titlePop = L.DomUtil.create('label', '', n);
 					titlePop.innerHTML = "<b>"+inputName.value+"</b>";
 					newPopup.appendChild(n);
-					var m = L.DomUtil.create('div');
-					var msgPop = L.DomUtil.create('label', '', m);
-					msgPop.innerHTML = inputMsg.value+"<br />";
-					newPopup.appendChild(m);
+					if (inputMsg.value != ""){ 
+						var m = L.DomUtil.create('div');
+						var msgPop = L.DomUtil.create('label', '', m);
+						msgPop.innerHTML = inputMsg.value+"<br />";
+						newPopup.appendChild(m);
+					}
 					var seePicsBtn = L.DomUtil.create('button','',newPopup);
 					seePicsBtn.innerHTML = "See photos";
+					seePicsBtn.setAttribute("data-toggle", "modal");
+					seePicsBtn.setAttribute("data-target", "#photosModal");
+					
 					var p = L.popup()
 							.setContent(newPopup)
 							.setLatLng(e.latlng);
+							
 					L.marker(e.latlng).addTo(map)
 					.bindPopup(p) 
 					.openPopup(); 
-					
 					
 				}
 				else {					
