@@ -95,8 +95,10 @@
         </button>
       </div>
       <div class="modal-body" id="modalBodyPic">
-		<img src="style/img/add-camera.png" height="60" width="60" style="border: #c5c5c5 2px dashed; padding: 4px; border-radius:4px">
-      </div>
+		<a href='#'> 
+			<img src="style/img/add-camera.png" id="addPhotoBtn" height="60" width="60" style="border: #c5c5c5 2px dashed; padding: 4px; border-radius:4px">
+		</a>
+	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -185,25 +187,43 @@
 			contPict.appendChild(pic);	
 			container.appendChild(contPict);
 			
+			$('#addPhotoBtn').click(function(){ 
+				$(pic).trigger('click'); 
+				$(pic).change(function(){
+					if (pic.files.length >0) { 
+						var file = pic.files[0]; 
+						var reader  = new FileReader();
+						reader.onload = function(e)  { 
+							var image = document.createElement("img"); 
+							image.src = e.target.result; 
+							image.style.maxWidth = '300px'
+							image.style.maxHeight = '300px' 
+							
+							document.querySelector("#modalBodyPic").appendChild(image); 
+						}
+						reader.readAsDataURL(file);			
+					} 
+				})		
+			});
+			
 			var contValid = L.DomUtil.create('div'),
 			okBtn = createButton('Validate', contValid); 
 			contValid.className = "markContainer";
 			container.appendChild(contValid);
 			
 			L.DomEvent.on(okBtn, 'click', function() {
-				var file = pic.files[0]; 
-				if (file != null) { 
+				if (pic.files.length >0) { 
+					var file = pic.files[0]; 
 					var reader  = new FileReader();
 					reader.onload = function(e)  { 
-						var image; 
-						image = document.createElement("img"); 
+						var image = document.createElement("img"); 
 						image.src = e.target.result; 
-						<!-- image.style.width = '50%' -->
-						image.style.maxHeight = '200px' 
+						image.style.maxWidth = '300px'
+						image.style.maxHeight = '300px' 
 						
 						document.querySelector("#modalBodyPic").appendChild(image); 
-						reader.readAsDataURL(file);			
 					}
+					reader.readAsDataURL(file);			
 				} 
 				if (inputName.value != "") {   
 					var newPopup = L.DomUtil.create('div');
@@ -254,7 +274,7 @@
 			L.latLng(48.1, 2.36)
 		]
 	}).addTo(map);
-	
+		
 	
 </script>
 
