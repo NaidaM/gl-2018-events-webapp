@@ -43,14 +43,16 @@ if (formRegister!=null) { formRegister.addEventListener("submit", function(e) {
 		document.querySelector("#register-area").style.height = document.querySelector("#register-area").clientHeight + error.clientHeight + "px" ;
 	}
 	
-	else if (pwd != confpwd) {
+	else if (pwd !== confpwd) {
 		error.innerHTML = "Les mots de passe ne correspondent pas.";
 		error.style.display = "block";
 		document.querySelector("#register-area").style.height = document.querySelector("#register-area").clientHeight + error.clientHeight + "px" ;
 	}
 	
 	else {
-		document.querySelector("#idValBtn").prop( "disabled", true );
+        document.querySelector("#idValBtn").disabled = true;
+        document.querySelector(".loadBtnText").style.display = "none";
+        document.querySelector("#load").style.display = "block";
 		axios.post(path+"auth/register", {
 		pseudo: pseudo,
 		email: mail,
@@ -59,12 +61,22 @@ if (formRegister!=null) { formRegister.addEventListener("submit", function(e) {
 	  })
 	.then(function (response) {
 		console.log(response);
+        document.location.href = "login.html";
 	  })
 	.catch(function (err) {		
 		document.querySelector("#idValBtn").disabled = false;
 		document.querySelector(".loadBtnText").style.display = "block";
 		document.querySelector("#load").style.display = "none";
-		console.log(err.response.data.message[0]);
+		if(typeof err.response !== "undefined"){
+            console.log(err.response.data.message[0]);
+            error.innerHTML = "Ce pseudo existe déja";
+            error.style.display = "block";
+            document.querySelector("#register-area").style.height =
+				document.querySelector("#register-area").clientHeight + error.clientHeight + "px" ;
+        }else {
+            console.log(err);
+        }
+
 	  });
 	}
 	
