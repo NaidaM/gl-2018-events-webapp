@@ -55,3 +55,22 @@ textarea {
 	text-align: center;
 	color:white;
 }
+
+#addPhotoBtn{
+	 height:60px;
+	 width:60px;
+	 border: #c5c5c5 2px dashed; 
+	 padding: 6px; 
+	 border-radius:6px
+}
+
+.modal-dialog {
+	max-width: fit-content;
+}
+.modal-body {
+	max-height: 60vh;
+	text-align: center;
+	overflow-y: scroll
+}
+	
+	

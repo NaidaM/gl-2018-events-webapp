@@ -96,7 +96,7 @@
       </div>
       <div class="modal-body" id="modalBodyPic">
 		<a href='#'> 
-			<img src="style/img/add-camera.png" id="addPhotoBtn" height="60" width="60" style="border: #c5c5c5 2px dashed; padding: 4px; border-radius:4px">
+			<img src="style/img/add-camera.png" id="addPhotoBtn">
 		</a>
 	  </div>
       <div class="modal-footer">
@@ -122,9 +122,7 @@
 </script>
 <script>
 	var map = L.map('mapid').setView([48.85, 2.35], 13);
-	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-	}).addTo(map);
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
 	L.marker([48.841, 2.355]).addTo(map)
 		.bindPopup('Place X')
@@ -135,6 +133,23 @@
 		btn.setAttribute('type', 'button');
 		btn.innerHTML = label;
 		return btn;
+	}
+	
+	function addImage(fileInput, container) {
+		if (fileInput.files.length >0) { 
+			var file = fileInput.files[0]; 
+			var reader  = new FileReader();
+			reader.onload = function(e)  { 
+				var image = document.createElement("img"); 
+				image.src = e.target.result; 
+				image.style.maxWidth = '300px'
+				image.style.maxHeight = '300px' 
+				
+				container.appendChild(image); 
+			}
+			reader.readAsDataURL(file);			
+		} 
+		
 	}	
 			
 	map.on('click', function(e) {
@@ -188,21 +203,12 @@
 			container.appendChild(contPict);
 			
 			$('#addPhotoBtn').click(function(){ 
-				$(pic).trigger('click'); 
-				$(pic).change(function(){
-					if (pic.files.length >0) { 
-						var file = pic.files[0]; 
-						var reader  = new FileReader();
-						reader.onload = function(e)  { 
-							var image = document.createElement("img"); 
-							image.src = e.target.result; 
-							image.style.maxWidth = '300px'
-							image.style.maxHeight = '300px' 
-							
-							document.querySelector("#modalBodyPic").appendChild(image); 
-						}
-						reader.readAsDataURL(file);			
-					} 
+				var fileInput = document.createElement("input");
+				fileInput.type = "file";
+			
+				$(fileInput).trigger('click'); 
+				$(fileInput).change(function(){
+					addImage(fileInput, document.querySelector("#modalBodyPic"));
 				})		
 			});
 			
@@ -212,19 +218,7 @@
 			container.appendChild(contValid);
 			
 			L.DomEvent.on(okBtn, 'click', function() {
-				if (pic.files.length >0) { 
-					var file = pic.files[0]; 
-					var reader  = new FileReader();
-					reader.onload = function(e)  { 
-						var image = document.createElement("img"); 
-						image.src = e.target.result; 
-						image.style.maxWidth = '300px'
-						image.style.maxHeight = '300px' 
-						
-						document.querySelector("#modalBodyPic").appendChild(image); 
-					}
-					reader.readAsDataURL(file);			
-				} 
+				addImage(pic, document.querySelector("#modalBodyPic"));
 				if (inputName.value != "") {   
 					var newPopup = L.DomUtil.create('div');
 					var n = L.DomUtil.create('div');
