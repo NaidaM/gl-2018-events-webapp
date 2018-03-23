@@ -1,8 +1,8 @@
 #login-area {
     background-color: white;
-	position:absolute;
+    position: relative;
     left: 50%;
-    top: 20%;
+    top: 10%;
     margin-left: -150px; 
     opacity: 1;
     width: 300px;
