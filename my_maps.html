@@ -60,8 +60,15 @@
  </div>
 </header>
 
+<div class="container-fluid" id="containerWelcome">
+	<h3>Bienvenue sur votre espace de création de cartes personnelles !</h3>
+	<h3>Créez votre première carte :</h3>
+	<button type="button" class="btn btn-secondary" id="firstMapBtn" data-toggle="modal" data-target="#newMapModal" ><i class="fas fa-plus-circle"></i></button>    
 
-<div class="container-fluid">
+</div>
+
+
+<div class="container-fluid" id="containerMaps">
 	<div id="mapid"></div>
 	<div id="markplace">	
 	</div>
@@ -70,7 +77,7 @@
   
 	<button type="button" class="btn primary-btn" id="addmap">+</button>
 
-	<div class="contmaps slider slider-nav">
+	<div class="slidemaps slider slider-nav">
 		<div><a href='#'> <h4 class="mapLabel">Map 1</h4> </a></div>
 		<div><a href='#'> <h4 class="mapLabel">Map 2</h4></a></div>
 		<div><a href='#'> <h4 class="mapLabel">3</h4></a></div>
@@ -107,13 +114,47 @@
   </div>
 </div>
 
+<div class="modal fade" role="dialog" id="newMapModal">
+  <div class="modal-dialog" role="document">
+  
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create new map</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+		
+		<form id="form-newMap" action='#'>	  
+			<div class="modal-body" id="modalBodyPic">			
+				<div class="row justify-content-center">
+					<div class="col-sm-10">
+						<div class="alert alert-danger error" role="alert" style="display: none; height:35px; padding: 5px"></div>
+						<input class="form-control" type="text" placeholder="Name of the map" name="name" id="idNameMap"> </br>
+					</div>
+					<div class="col-sm-10">
+						<textarea class="form-control" placeholder="Description" name="desc" id="idDescMap"></textarea>
+					</div>
+				</div>		
+			</div>
+			
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="createMapBtn">Create</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+	  
+		</form>
+	  
+    </div>
+  </div>
+</div>
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script type="text/javascript">
-	
-	$('.contmaps').slick({
+<script type="text/javascript">	
+	$('.slidemaps').slick({
 		infinite: true,
 		slidesToShow: 5,
 		slidesToScroll: 2,
@@ -254,20 +295,19 @@
 		
 			markBtn.style.display = 'none';
 		}); 
-			
-		   
+					   
 		L.popup()
 			.setContent(container)
 			.setLatLng(e.latlng)
         .openOn(map);
 				
 	});
-	L.Routing.control({
-		waypoints: [
-			L.latLng(48.74, 2.40),
-			L.latLng(48.1, 2.36)
-		]
-	}).addTo(map);
+	<!-- L.Routing.control({ -->
+		<!-- waypoints: [ -->
+			<!-- L.latLng(48.74, 2.40), -->
+			<!-- L.latLng(48.1, 2.36) -->
+		<!-- ] -->
+	<!-- }).addTo(map); -->
 		
 	
 </script>

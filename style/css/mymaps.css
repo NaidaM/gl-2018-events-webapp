@@ -1,4 +1,26 @@
-#mapid { height: 65vh; }
+#containerMaps{	
+}
+
+#containerWelcome{	
+	display: none;
+	text-align:center;
+	margin-top: 45px;
+}
+
+#firstMapBtn {
+	border-radius:50%;
+	border-color:transparent;
+	background-color:transparent;
+	color:#495057;
+	font-size:6em;
+}
+
+h3 {
+	margin: 30px;
+}
+#mapid { 
+	height: 65vh;
+}
 
 .markContainer {
 	text-align: center;
@@ -23,7 +45,7 @@ textarea {
    resize: none;
 }
 
-.contmaps {
+.slidemaps {
 	font-family:Arial;
 	width:800px;
 	display:block;
