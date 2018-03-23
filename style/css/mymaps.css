@@ -70,8 +70,10 @@ textarea {
 }
 
 .modal-dialog {
-	max-width: fit-content;
+    display: table;
+    max-width: none;
 }
+
 .modal-body {
 	max-height: 60vh;
 	text-align: center;
