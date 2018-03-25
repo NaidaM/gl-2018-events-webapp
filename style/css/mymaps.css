@@ -1,4 +1,6 @@
-#containerMaps{	
+#containerMaps{
+	visibility: hidden;
+	margin-top: -5px;
 }
 
 #containerWelcome{	
@@ -7,13 +9,17 @@
 	margin-top: 45px;
 }
 
-#firstMapBtn {
+.firstMapBtn {
 	border-radius:50%;
-	border-color:transparent;
+	border:none;
 	background-color:transparent;
 	color:#495057;
 	font-size:6em;
+	outline:none;
 }
+
+
+
 
 h3 {
 	margin: 30px;

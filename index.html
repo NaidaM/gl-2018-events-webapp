@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
  <meta charset="UTF-8">
- <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
  <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
  <link rel="stylesheet" href="style/css/app.css" />
  <link rel="stylesheet" href="style/css/home.css" />
@@ -14,7 +14,7 @@
  <div class="container-fluid">
   <nav id="menu" class="navbar navbar-light">
    <div style="display: inline">
-    <img src="style/img/logo.png" height="60" width="46" >
+    <img src="style/img/logo.png" id="logo" />
     <h4 style="display: inline" id="app-name">Events Location</h4>
    </div>
    
@@ -32,16 +32,26 @@
     </li>
     <li class="nav-item">
      <a class="nav-link" href="public.html">Public area</a>
-    </li>	
-    <li class="nav-item">
+    </li>
+    <li class="nav-item auth">
      <a class="nav-link" href="my_maps.html">My maps</a>
     </li>
-    <li class="nav-item">
+       <li class="nav-item dropdown auth">
+           <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+              aria-haspopup="true" aria-expanded="false">@pseudo</a>
+           <div class="dropdown-menu dropdown-menu-right">
+               <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#changePassword">Change password</a>
+               <div class="dropdown-divider"></div>
+               <a class="dropdown-item" href="#" id="logoutBtn">Logout</a>
+           </div>
+       </li>
+    <li class="nav-item anonymous">
      <a class="nav-link " href="register.html">Register</a>
     </li>
-    <li class="nav-item">
-     <a class="nav-link "  href="login.html">Login</a>
+    <li class="nav-item anonymous">
+      <a class="nav-link "  href="login.html">Login</a>
     </li>
+
     <!--<li class="nav-item dropdown">
      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
      <div class="dropdown-menu">
@@ -113,6 +123,50 @@
 </div>
 
 
+<div class="modal fade" role="dialog" id="changePassword">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change your password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form id="updatePassword" action='#'>
+                <div class="modal-body" >
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger error" role="alert" style="display: none; height:35px; padding: 5px"></div>
+                            <input class="form-control" type="password" placeholder="Actual password" name="password" > </br>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12">
+                            <input class="form-control" type="password"
+                                   placeholder="New password" name="password" > </br>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12">
+                            <input class="form-control" type="password"
+                                   placeholder="Confirm new password" name="password" > </br>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
 
 
 <footer id="footer">
@@ -122,6 +176,32 @@
   </div>
  </div>
 </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+<script src="script/app.js"></script>
+<script>
+    var ano = document.querySelectorAll(".anonymous");
+    var auth = document.querySelectorAll(".auth");
+   if(localStorage.getItem('access_token') != null){
+
+    for (var i = 0;i<ano.length;i++){
+        ano[i].style.display = "none";
+    }
+    for (var j = 0;j<auth.length;j++){
+        auth[j].style.display = "block";
+    }
+
+}else {
+    for (var i = 0;i<ano.length;i++){
+        ano[i].style.display = "block";
+    }
+       for (var j = 0;j<auth.length;j++){
+           auth[j].style.display = "none";
+       }
+}
+</script>
 </body>
+
+
 </html>

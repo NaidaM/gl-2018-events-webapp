@@ -1,3 +1,7 @@
+if(localStorage.getItem('access_token') != null){
+    document.location.href = "home.html";
+}
+
 var formRegister = document.querySelector("#form-register");
 var formLogin = document.querySelector("#form-login");
 if (formRegister!=null) var heightFormRegister = document.querySelector("#register-area").clientHeight;
@@ -109,7 +113,9 @@ if (formLogin!=null) { formLogin.addEventListener("submit", function(e) {
 		})
 		.then(function (response) {			
 			if (response.status == 200) {
-			
+
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("pseudo");
 				localStorage.setItem('access_token', response.data.access_token);
 				localStorage.setItem('pseudo', pseudo);
 				document.location.href = "my_maps.html";

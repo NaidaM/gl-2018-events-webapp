@@ -2,15 +2,12 @@
 <html lang="en">
 <head>
  <meta charset="UTF-8">
- <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
 	integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
 	crossorigin=""/>
- <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-   integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
-   crossorigin=""></script>
+
  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
- <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
  <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css" />
@@ -25,7 +22,7 @@
  <div class="container-fluid">
   <nav id="menu" class="navbar navbar-light">
    <div style="display: inline">
-    <img src="style/img/logo.png" height="60" width="46">
+       <img src="style/img/logo.png" id="logo" />
     <h4 style="display: inline" id="app-name">Events Location</h4>
    </div>
    
@@ -46,15 +43,18 @@
     <li class="nav-item">
      <a class="nav-link active" href="my_maps.html">My maps</a>
     </li>
-    <!--<li class="nav-item dropdown">
-     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-     <div class="dropdown-menu">
-      <a class="dropdown-item" href="#one">one</a>
-      <a class="dropdown-item" href="#two">two</a>
-      <div role="separator" class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#three">three</a>
-     </div>
-    </li>-->
+
+    <li class="nav-item dropdown auth">
+        <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#"
+           aria-haspopup="true" aria-expanded="false">@pseudo</a>
+        <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#changePassword" >Change password</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" id="logoutBtn">Logout</a>
+        </div>
+    </li>
+
+
    </ul>
   </nav>
  </div>
@@ -63,56 +63,41 @@
 <div class="container-fluid" id="containerWelcome">
 	<h3>Bienvenue sur votre espace de création de cartes personnelles !</h3>
 	<h3>Créez votre première carte :</h3>
-	<button type="button" class="btn btn-secondary" id="firstMapBtn" data-toggle="modal" data-target="#newMapModal" ><i class="fas fa-plus-circle"></i></button>    
+	<button type="button"
+            class="firstMapBtn" data-toggle="modal" data-target="#newMapModal" >
+        <i class="fas fa-plus-circle"></i></button>
 
 </div>
 
 
-<div class="container-fluid" id="containerMaps">
+<div  id="containerMaps">
 	<div id="mapid"></div>
 	<div id="markplace">	
 	</div>
 	
-  <div class="row"> 
-  
-	<button type="button" class="btn primary-btn" id="addmap">+</button>
+  <div class="row">
+
+      <button type="button"
+              class="firstMapBtn" data-toggle="modal" data-target="#newMapModal" >
+          <i class="fas fa-plus-circle"></i></button>
 
 	<div class="slidemaps slider slider-nav">
+        <script id="templateExample" type="text/template">
+            <div>
+                <%= attribute %>
+            </div>
+        </script>
 		<div><a href='#'> <h4 class="mapLabel">Map 1</h4> </a></div>
 		<div><a href='#'> <h4 class="mapLabel">Map 2</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">3</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">4</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">5</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">6</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">7</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">8</h4></a></div>
+		<div><a href='#'> <h4 class="mapLabel">Map 3</h4></a></div>
+		<div><a href='#'> <h4 class="mapLabel">Map 4</h4></a></div>
 	</div>
 		
-	<button type="button" class="btn btn-light" id="addmap">-</button>
+	<button type="button" class="btn btn-light" id="removemap">-</button>
   </div>
 </div>
 
-<div class="modal fade" role="dialog" id="photosModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Photos manager</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="modalBodyPic">
-		<a href='#'> 
-			<img src="style/img/add-camera.png" id="addPhotoBtn">
-		</a>
-	  </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <div class="modal fade" role="dialog" id="newMapModal">
   <div class="modal-dialog" role="document">
@@ -126,7 +111,7 @@
       </div>
 		
 		<form id="form-newMap" action='#'>	  
-			<div class="modal-body" id="modalBodyPic">			
+			<div class="modal-body" >
 				<div class="row justify-content-center">
 					<div class="col-sm-10">
 						<div class="alert alert-danger error" role="alert" style="display: none; height:35px; padding: 5px"></div>
@@ -149,168 +134,50 @@
   </div>
 </div>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<div class="modal fade" role="dialog" id="changePassword">
+    <div class="modal-dialog" role="document">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script type="text/javascript">	
-	$('.slidemaps').slick({
-		infinite: true,
-		slidesToShow: 5,
-		slidesToScroll: 2,
-		dots: true
-	});
-</script>
-<script>
-	var map = L.map('mapid').setView([48.85, 2.35], 13);
-	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change your password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-	L.marker([48.841, 2.355]).addTo(map)
-		.bindPopup('Place X')
-		.openPopup();
-		
-	function createButton(label, container) {
-		var btn = L.DomUtil.create('button', 'addedbtn', container);
-		btn.setAttribute('type', 'button');
-		btn.innerHTML = label;
-		return btn;
-	}
-	
-	function addImage(fileInput, container) {
-		if (fileInput.files.length >0) { 
-			var file = fileInput.files[0]; 
-			var reader  = new FileReader();
-			reader.onload = function(e)  { 
-				var image = document.createElement("img"); 
-				image.src = e.target.result; 
-				image.style.maxWidth = '300px'
-				image.style.maxHeight = '300px' 
-				
-				container.appendChild(image); 
-			}
-			reader.readAsDataURL(file);			
-		} 
-		
-	}	
-			
-	map.on('click', function(e) {
-		var container = L.DomUtil.create('div'),
-			contMark = L.DomUtil.create('div'),
-			markBtn = createButton('Mark place', contMark);
-		contMark.className = "markContainer";
-		container.appendChild(contMark);
-		
-		var contLoc = L.DomUtil.create('div'),
-		startBtn = createButton('Start from this location', contLoc), 
-		destBtn = createButton('Go to this location', contLoc); 
-		container.appendChild(contLoc);
-			
-		<!-- L.DomEvent.on(startBtn, 'click', function() { -->
-			<!-- control.spliceWaypoints(0, 1, e.latlng); -->
-			<!-- map.closePopup(); -->
-		<!-- }); -->
-		
-		<!-- L.DomEvent.on(destBtn, 'click', function() { -->
-			<!-- control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng); -->
-			<!-- map.closePopup(); -->
-		<!-- }); -->
-				
-		L.DomEvent.on(markBtn, 'click', function() {
-			var contName = document.createElement("div");
-			var labelName = L.DomUtil.create("label",'labelTitle',contName);
-			labelName.innerHTML = "Place name";
-			var inputName = document.createElement("input");
-			inputName.type = "text";	
-			contName.appendChild(inputName);
-			container.appendChild(contName);
-			
-			var contMsg = document.createElement("div");
-			var label = L.DomUtil.create("label",'labelTitle',contMsg);
-			label.innerHTML = "Message";
-			var inputMsg = document.createElement("textarea");
-			inputMsg.rows = "4";
-			inputMsg.maxLength = "160";
-			inputMsg.cols = "35";
-			contMsg.appendChild(inputMsg);
-			container.appendChild(contMsg);
-			
-			var contPict = document.createElement("div");
-			label = document.createElement("label");
-			label.innerHTML = "Pictures";
-			contPict.appendChild(label);			
-			var pic = document.createElement("input");
-			pic.type = "file";
-			contPict.appendChild(pic);	
-			container.appendChild(contPict);
-			
-			$('#addPhotoBtn').click(function(){ 
-				var fileInput = document.createElement("input");
-				fileInput.type = "file";
-			
-				$(fileInput).trigger('click'); 
-				$(fileInput).change(function(){
-					addImage(fileInput, document.querySelector("#modalBodyPic"));
-				})		
-			});
-			
-			var contValid = L.DomUtil.create('div'),
-			okBtn = createButton('Validate', contValid); 
-			contValid.className = "markContainer";
-			container.appendChild(contValid);
-			
-			L.DomEvent.on(okBtn, 'click', function() {
-				addImage(pic, document.querySelector("#modalBodyPic"));
-				if (inputName.value != "") {   
-					var newPopup = L.DomUtil.create('div');
-					var n = L.DomUtil.create('div');
-					n.style.textAlign = "center";
-					var titlePop = L.DomUtil.create('label', '', n);
-					titlePop.innerHTML = "<b>"+inputName.value+"</b>";
-					newPopup.appendChild(n);
-					if (inputMsg.value != ""){ 
-						var m = L.DomUtil.create('div');
-						var msgPop = L.DomUtil.create('label', '', m);
-						msgPop.innerHTML = inputMsg.value+"<br />";
-						newPopup.appendChild(m);
-					}
-					var seePicsBtn = L.DomUtil.create('button','',newPopup);
-					seePicsBtn.innerHTML = "See photos";
-					seePicsBtn.setAttribute("data-toggle", "modal");
-					seePicsBtn.setAttribute("data-target", "#photosModal");
-					
-					var p = L.popup()
-							.setContent(newPopup)
-							.setLatLng(e.latlng);
-							
-					L.marker(e.latlng).addTo(map)
-					.bindPopup(p) 
-					.openPopup(); 
-					
-				}
-				else {					
-					labelName.style.color = "red";
-					labelName.innerHTML = "Place name (essential)"
-				}
-			});
-		
-			markBtn.style.display = 'none';
-		}); 
-					   
-		L.popup()
-			.setContent(container)
-			.setLatLng(e.latlng)
-        .openOn(map);
-				
-	});
-	<!-- L.Routing.control({ -->
-		<!-- waypoints: [ -->
-			<!-- L.latLng(48.74, 2.40), -->
-			<!-- L.latLng(48.1, 2.36) -->
-		<!-- ] -->
-	<!-- }).addTo(map); -->
-		
-	
-</script>
+            <form id="updatePassword" action='#'>
+                <div class="modal-body" >
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger error" role="alert" style="display: none; height:35px; padding: 5px"></div>
+                            <input class="form-control" type="password" placeholder="Actual password" name="password" > </br>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12">
+                            <input class="form-control" type="password"
+                                   placeholder="New password" name="password" > </br>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12">
+                            <input class="form-control" type="password"
+                                   placeholder="Confirm new password" name="password" > </br>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
 
 <footer id="footer">
  <div class="row">
@@ -319,8 +186,184 @@
   </div>
  </div>
 </footer>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script  src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"/>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="script/app.js"></script>
+
+<script type="text/javascript">
+    $('.slidemaps').slick({
+        infinite: true,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        dots: true
+    });
+
+   var templateExample = _.template($('#templateExample').html());
+
+    var html = templateExample({
+        "attribute": "hhhhh"
+    });
+</script>
+<script>
+    var map = L.map('mapid').setView([48.85, 2.35], 13);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+    /*L.marker([48.841, 2.355]).addTo(map)
+        .bindPopup('Place X')
+        .openPopup();*/
+
+    function createButton(label, container) {
+        var btn = L.DomUtil.create('button', 'addedbtn', container);
+        btn.setAttribute('type', 'button');
+        btn.innerHTML = label;
+        return btn;
+    }
+
+    function addImage(fileInput, container) {
+        if (fileInput.files.length >0) {
+            var file = fileInput.files[0];
+            var reader  = new FileReader();
+            reader.onload = function(e)  {
+                var image = document.createElement("img");
+                image.src = e.target.result;
+                image.style.maxWidth = '300px'
+                image.style.maxHeight = '300px'
+
+                container.appendChild(image);
+            }
+            reader.readAsDataURL(file);
+        }
+
+    }
+
+    map.on('click', function(e) {
+        var container = L.DomUtil.create('div'),
+            contMark = L.DomUtil.create('div'),
+            markBtn = createButton('Mark place', contMark);
+        contMark.className = "markContainer";
+        container.appendChild(contMark);
+
+        var contLoc = L.DomUtil.create('div'),
+            startBtn = createButton('Start from this location', contLoc),
+            destBtn = createButton('Go to this location', contLoc);
+        container.appendChild(contLoc);
+
+        <!-- L.DomEvent.on(startBtn, 'click', function() { -->
+        <!-- control.spliceWaypoints(0, 1, e.latlng); -->
+        <!-- map.closePopup(); -->
+        <!-- }); -->
+
+        <!-- L.DomEvent.on(destBtn, 'click', function() { -->
+        <!-- control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng); -->
+        <!-- map.closePopup(); -->
+        <!-- }); -->
+
+        L.DomEvent.on(markBtn, 'click', function() {
+            var contName = document.createElement("div");
+            var labelName = L.DomUtil.create("label",'labelTitle',contName);
+            labelName.innerHTML = "Place name";
+            var inputName = document.createElement("input");
+            inputName.type = "text";
+            contName.appendChild(inputName);
+            container.appendChild(contName);
+
+            var contMsg = document.createElement("div");
+            var label = L.DomUtil.create("label",'labelTitle',contMsg);
+            label.innerHTML = "Message";
+            var inputMsg = document.createElement("textarea");
+            inputMsg.rows = "4";
+            inputMsg.maxLength = "160";
+            inputMsg.cols = "35";
+            contMsg.appendChild(inputMsg);
+            container.appendChild(contMsg);
+
+            var contPict = document.createElement("div");
+            label = document.createElement("label");
+            label.innerHTML = "Pictures";
+            contPict.appendChild(label);
+            var pic = document.createElement("input");
+            pic.type = "file";
+            contPict.appendChild(pic);
+            container.appendChild(contPict);
+
+            $('#addPhotoBtn').click(function(){
+                var fileInput = document.createElement("input");
+                fileInput.type = "file";
+
+                $(fileInput).trigger('click');
+                $(fileInput).change(function(){
+                    addImage(fileInput, document.querySelector("#modalBodyPic"));
+                })
+            });
+
+            var contValid = L.DomUtil.create('div'),
+                okBtn = createButton('Validate', contValid);
+            contValid.className = "markContainer";
+            container.appendChild(contValid);
+
+            L.DomEvent.on(okBtn, 'click', function() {
+                addImage(pic, document.querySelector("#modalBodyPic"));
+                if (inputName.value != "") {
+                    var newPopup = L.DomUtil.create('div');
+                    var n = L.DomUtil.create('div');
+                    n.style.textAlign = "center";
+                    var titlePop = L.DomUtil.create('label', '', n);
+                    titlePop.innerHTML = "<b>"+inputName.value+"</b>";
+                    newPopup.appendChild(n);
+                    if (inputMsg.value != ""){
+                        var m = L.DomUtil.create('div');
+                        var msgPop = L.DomUtil.create('label', '', m);
+                        msgPop.innerHTML = inputMsg.value+"<br />";
+                        newPopup.appendChild(m);
+                    }
+                    var seePicsBtn = L.DomUtil.create('button','',newPopup);
+                    seePicsBtn.innerHTML = "See photos";
+                    seePicsBtn.setAttribute("data-toggle", "modal");
+                    seePicsBtn.setAttribute("data-target", "#photosModal");
+
+                    var p = L.popup()
+                        .setContent(newPopup)
+                        .setLatLng(e.latlng);
+
+                    L.marker(e.latlng).addTo(map)
+                        .bindPopup(p)
+                        .openPopup();
+
+                }
+                else {
+                    labelName.style.color = "red";
+                    labelName.innerHTML = "Place name (essential)"
+                }
+            });
+
+            markBtn.style.display = 'none';
+        });
+
+        L.popup()
+            .setContent(container)
+            .setLatLng(e.latlng)
+            .openOn(map);
+
+    });
+    <!-- L.Routing.control({ -->
+    <!-- waypoints: [ -->
+    <!-- L.latLng(48.74, 2.40), -->
+    <!-- L.latLng(48.1, 2.36) -->
+    <!-- ] -->
+    <!-- }).addTo(map); -->
+
+
+</script>
 <script defer src="script/my_maps.js"></script>
 </body>
 </html>

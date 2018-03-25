@@ -18,6 +18,7 @@ html{
 }
 body {
 	height: 100%;
+    font-family: "opensans-regular";
     margin: 0;
 	background: rgb(255,252,252); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(255,252,252,1) 0%, rgba(240,247,232,1) 99%); /* FF3.6-15 */
@@ -27,8 +28,9 @@ body {
 }
 
 header {
-    background-color: darkseagreen;
+    background-color: #a5c9a5;
 	margin-bottom:6px;
+    padding-bottom: 5px;
 }
 
 header .form-control{
@@ -45,6 +47,7 @@ header .btn-outline-secondary {
 	color: white;
 	font-size: 20px;
 	border-radius: 0 5px 5px 0;
+    background-color: darkslategrey;
 }
 header .btn-outline-secondary:hover {
     background-color: #007c5b;
@@ -178,4 +181,26 @@ input:focus{
 
 .maps {
     margin-bottom: 50px;
+}
+
+#services  h2{
+    font-size: 1.8rem;
+}
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+}
+
+a{
+    outline: none;
+}
+
+button{
+    outline: none;
+}
+
+#logo {
+    height: 60px !important;
+    width: 40px !important;
 }
