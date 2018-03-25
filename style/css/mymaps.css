@@ -18,9 +18,6 @@
 	outline:none;
 }
 
-
-
-
 h3 {
 	margin: 30px;
 }
@@ -86,8 +83,21 @@ textarea {
 	border-radius: 9px;
 	background-color: silver;
 	text-align: center;
-
 	color:white;
+}
+
+.tag {
+	background-color: #6193b6;
+	display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
 }
 
 #addPhotoBtn{
@@ -98,12 +108,12 @@ textarea {
 	 border-radius:6px
 }
 
-.modal-dialog {
+#modalDialogPhotos {
     display: table;
     max-width: none;
 }
 
-.modal-body {
+#modal-body {
 	max-height: 60vh;
 	text-align: center;
 	overflow-y: scroll

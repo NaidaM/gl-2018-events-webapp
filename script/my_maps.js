@@ -46,7 +46,7 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
                         nextArrow: '<button type="button" id="arrow-right" class="btn slick-next btn-outline-secondary"> <i class="fa fa-arrow-circle-right"></i></button>'
                     });
 
-                     maps = document.querySelectorAll(".map-link");
+                    maps = document.querySelectorAll(".map-link");
 
                     if(typeof  maps  !== "undefined"){
 
@@ -104,9 +104,4 @@ formNewMap.addEventListener("submit", function(e) {
 function clickMaps(e) {
 	e.preventDefault();
 	console.log(e.target.childNodes[1].firstChild.textContent);
-}
-
-
-
-
-		
+}	
