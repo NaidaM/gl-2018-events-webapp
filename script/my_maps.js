@@ -1,6 +1,8 @@
 var host = "http://localhost";
 var port = "8080";
-var path = host+":"+port+"/api/v1/";
+var path = host+":"+port+"/api/v1/"
+var maps;
+var mapsData;
 
 var formNewMap = document.querySelector("#form-newMap");
 
@@ -30,6 +32,7 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 					document.querySelector("#containerMaps").style.visibility = "visible";
                     document.querySelector("#containerMaps").style.display = "block";
 					document.querySelector("#containerWelcome").style.display = "none";
+					mapsData = response.data.maps;
                     var html = template({maps: response.data.maps});
                     $("#result").append(html);
                     $('.slidemaps').slick({
@@ -42,6 +45,16 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
                         prevArrow: '<button type="button" id="arrow-left" class="btn slick-prev"> <i class="fa fa-arrow-circle-left"></i></button>',
                         nextArrow: '<button type="button" id="arrow-right" class="btn slick-next btn-outline-secondary"> <i class="fa fa-arrow-circle-right"></i></button>'
                     });
+
+                     maps = document.querySelectorAll(".map-link");
+
+                    if(typeof  maps  !== "undefined"){
+
+                        for (var i = 0; i < maps.length; i++) {
+                            maps[i].addEventListener('click', clickMaps, true);
+                        }
+
+                    }
 				}
 				console.log(response.data);	
 			}			
@@ -86,6 +99,14 @@ formNewMap.addEventListener("submit", function(e) {
 		
 	}
 });
+
+
+function clickMaps(e) {
+	e.preventDefault();
+	console.log(e.target.childNodes[1].firstChild.textContent);
+}
+
+
 
 
 		

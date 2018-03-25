@@ -83,10 +83,6 @@
 
 	<div  id="result" class="slidemaps slider slider-nav">
 
-		<!--<div><a href='#'> <h4 class="mapLabel">Map 1</h4> </a></div>
-		<div><a href='#'> <h4 class="mapLabel">Map 2</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">Map 3</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">Map 4</h4></a></div>-->
 	</div>
   </div>
 </div>
@@ -134,19 +130,21 @@
 
 <script type="text/template" id="tmpl-message">
     <% _(maps).each(function(map) { %>
-    <div>
-    <div class="card event-map">
-        <div class="card-body">
-            <h5 class="card-title" style="font-weight: bold"><%= map.name %></h5>
-            <p class="card-text"><%= map.description %></p>
-            <p>Tag :
-                <% _(map.tags).each(function(tag) { %>
-                    <a href="#" class="badge badge-tag"><%= tag %></a>
-                <% }) %>
-            </p>
+
+        <div class="card event-map">
+            <div class="card-body">
+
+                <h5 class="card-title" style="font-weight: bold">
+                    <a href="#" class="map-link"><%= map.name %> <span hidden><%= map.id %></span></a></h5>
+                <p class="card-text"><%= map.description %></p>
+                <p>Tag :
+                    <% _(map.tags).each(function(tag) { %>
+                        <a href="#" class="badge badge-tag"><%= tag %></a>
+                    <% }) %>
+                </p>
+            </div>
         </div>
-    </div>
-    </div>
+
     <% }) %>
 </script>
 
