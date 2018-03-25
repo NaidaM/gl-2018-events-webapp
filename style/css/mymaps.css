@@ -52,10 +52,10 @@ textarea {
 }
 
 .slidemaps {
-	font-family:Arial;
-	width:800px;
+	width:850px;
 	display:block;
 	margin:0 auto;
+	padding-bottom: 50px;
 }
 
 .mapLabel {
@@ -86,6 +86,7 @@ textarea {
 	border-radius: 9px;
 	background-color: silver;
 	text-align: center;
+
 	color:white;
 }
 
@@ -107,5 +108,39 @@ textarea {
 	text-align: center;
 	overflow-y: scroll
 }
-	
-	
+
+
+#arrow-left, #arrow-right {
+	background-color: #6c757d;
+	color: white;
+	height: 50px;
+	width: 50px;
+}
+#arrow-right {
+	margin-right: -60px;
+	text-align: center;
+}
+
+#arrow-left {
+	margin-left: -50px;
+	text-align: center;
+}
+
+.slick-next::before {
+	content: '';
+}
+
+.slick-prev::before {
+	content: '';
+}
+
+.slidemaps .event-map{
+	margin-right: 10px;
+}
+
+#createMap {
+	color: #ff6c45;
+	margin-left: 10%;
+	cursor: pointer;
+	outline: none;
+}

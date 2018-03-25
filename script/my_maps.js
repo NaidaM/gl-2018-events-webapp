@@ -8,6 +8,10 @@ if(localStorage.getItem('access_token') == null){
     document.location.href = "login.html";
 }
 
+var template = _.template($("#tmpl-message").html());
+
+
+
 var axios = axios.create({
   baseURL: path,
   timeout: 5000,
@@ -26,6 +30,18 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 					document.querySelector("#containerMaps").style.visibility = "visible";
                     document.querySelector("#containerMaps").style.display = "block";
 					document.querySelector("#containerWelcome").style.display = "none";
+                    var html = template({maps: response.data.maps});
+                    $("#result").append(html);
+                    $('.slidemaps').slick({
+                        infinite: false,
+                        slidesToShow: 2,
+                        slidesToScroll:2 ,
+                        variableWidth:true,
+                        centerMode:false,
+                        centerPadding: '100px',
+                        prevArrow: '<button type="button" id="arrow-left" class="btn slick-prev"> <i class="fa fa-arrow-circle-left"></i></button>',
+                        nextArrow: '<button type="button" id="arrow-right" class="btn slick-next btn-outline-secondary"> <i class="fa fa-arrow-circle-right"></i></button>'
+                    });
 				}
 				console.log(response.data);	
 			}			

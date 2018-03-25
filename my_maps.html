@@ -18,7 +18,7 @@
 <body>
 
 <header>
- 
+
  <div class="container-fluid">
   <nav id="menu" class="navbar navbar-light">
    <div style="display: inline">
@@ -78,22 +78,16 @@
   <div class="row">
 
       <button type="button"
-              class="firstMapBtn" data-toggle="modal" data-target="#newMapModal" >
+              class="firstMapBtn" id="createMap" data-toggle="modal" data-target="#newMapModal" >
           <i class="fas fa-plus-circle"></i></button>
 
-	<div class="slidemaps slider slider-nav">
-        <script id="templateExample" type="text/template">
-            <div>
-                <%= attribute %>
-            </div>
-        </script>
-		<div><a href='#'> <h4 class="mapLabel">Map 1</h4> </a></div>
+	<div  id="result" class="slidemaps slider slider-nav">
+
+		<!--<div><a href='#'> <h4 class="mapLabel">Map 1</h4> </a></div>
 		<div><a href='#'> <h4 class="mapLabel">Map 2</h4></a></div>
 		<div><a href='#'> <h4 class="mapLabel">Map 3</h4></a></div>
-		<div><a href='#'> <h4 class="mapLabel">Map 4</h4></a></div>
+		<div><a href='#'> <h4 class="mapLabel">Map 4</h4></a></div>-->
 	</div>
-		
-	<button type="button" class="btn btn-light" id="removemap">-</button>
   </div>
 </div>
 
@@ -122,6 +116,9 @@
 					</div>
 				</div>		
 			</div>
+
+
+
 			
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" id="createMapBtn">Create</button>
@@ -133,6 +130,25 @@
     </div>
   </div>
 </div>
+
+
+<script type="text/template" id="tmpl-message">
+    <% _(maps).each(function(map) { %>
+    <div>
+    <div class="card event-map">
+        <div class="card-body">
+            <h5 class="card-title" style="font-weight: bold"><%= map.name %></h5>
+            <p class="card-text"><%= map.description %></p>
+            <p>Tag :
+                <% _(map.tags).each(function(tag) { %>
+                    <a href="#" class="badge badge-tag"><%= tag %></a>
+                <% }) %>
+            </p>
+        </div>
+    </div>
+    </div>
+    <% }) %>
+</script>
 
 <div class="modal fade" role="dialog" id="changePassword">
     <div class="modal-dialog" role="document">
@@ -182,6 +198,7 @@
 <footer id="footer">
  <div class="row">
   <div class="col-sm-12">
+
    <h6 id="copyright">copyright © 2018 - GL</h6>
   </div>
  </div>
@@ -201,18 +218,9 @@
 <script src="script/app.js"></script>
 
 <script type="text/javascript">
-    $('.slidemaps').slick({
-        infinite: true,
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        dots: true
-    });
 
-   var templateExample = _.template($('#templateExample').html());
 
-    var html = templateExample({
-        "attribute": "hhhhh"
-    });
+
 </script>
 <script>
     var map = L.map('mapid').setView([48.85, 2.35], 13);
@@ -364,6 +372,6 @@
 
 
 </script>
-<script defer src="script/my_maps.js"></script>
+<script src="script/my_maps.js"></script>
 </body>
 </html>
