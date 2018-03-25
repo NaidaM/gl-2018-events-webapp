@@ -167,7 +167,7 @@
                 <h5 class="card-title" style="font-weight: bold">
                     <a href="#" class="map-link"><%= map.name %> <span hidden><%= map.id %></span></a></h5>
                 <p class="card-text"><%= map.description %></p>
-                <p>Tag :
+                <p>
                     <% _(map.tags).each(function(tag) { %>
                         <a href="#" class="badge badge-tag"><%= tag %></a>
                     <% }) %>

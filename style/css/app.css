@@ -23,12 +23,12 @@ body {
 	background: rgb(255,252,252); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(255,252,252,1) 0%, rgba(240,247,232,1) 99%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, rgba(255,252,252,1) 0%,rgba(240,247,232,1) 99%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, rgba(255,252,252,1) 0%,rgba(240,247,232,1) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: linear-gradient(to top, rgba(255,252,252,1) 0%,rgba(240,247,232,1) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fffcfc', endColorstr='#f0f7e8',GradientType=0 ); /* IE6-9 */
 }
 
 header {
-    background-color: #a5c9a5;
+    background-color: #9ab29f;
 	margin-bottom:6px;
     padding-bottom: 5px;
 }
@@ -202,6 +202,6 @@ button{
 
 #logo {
     height: 60px !important;
-    width: 40px !important;
+    width: 46px !important;
 }
 

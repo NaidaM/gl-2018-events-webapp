@@ -149,8 +149,8 @@ textarea {
 }
 
 #createMap {
-	color: #ff6c45;
-	margin-left: 10%;
+	color: #2f4f4f;
 	cursor: pointer;
+	height: 85px;
 	outline: none;
 }
