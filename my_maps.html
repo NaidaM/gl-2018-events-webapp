@@ -82,7 +82,7 @@
 	<div  id="result" class="slidemaps slider slider-nav"></div>
 	
 	<div class = "column">
-		<button type="button" class="sharDelBtn" id="deleteMap" data-toggle="modal" data-target="#">
+		<button type="button" class="sharDelBtn" id="deleteMap" data-toggle="modal" data-target="#deleteModal">
 			<i class="fas fa-share-alt"></i>
 		</button>
 		<button type="button" class="sharDelBtn" id="shareMap" data-toggle="modal" data-target="#">
@@ -109,6 +109,27 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" role="dialog" id="deleteModal">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete map</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBodyPic">
+		<h4 style="font-size:14px">Remove this map ?</h4>
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
