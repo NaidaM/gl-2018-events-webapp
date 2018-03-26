@@ -36,14 +36,15 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
                     var html = template({maps: response.data.maps});
                     $("#result").append(html);
                     $('.slidemaps').slick({
-                        infinite: false,
+						dots: true,
+						infinite: false,
                         slidesToShow: 2,
                         slidesToScroll:2 ,
                         variableWidth:true,
                         centerMode:false,
                         centerPadding: '100px',
                         prevArrow: '<button type="button" id="arrow-left" class="btn slick-prev"> <i class="fa fa-arrow-circle-left"></i></button>',
-                        nextArrow: '<button type="button" id="arrow-right" class="btn slick-next btn-outline-secondary"> <i class="fa fa-arrow-circle-right"></i></button>'
+                        nextArrow: '<button type="button" id="arrow-right" class="btn slick-next"> <i class="fa fa-arrow-circle-right"></i></button>'
                     });
 
                     maps = document.querySelectorAll(".map-link");
@@ -73,6 +74,9 @@ formNewMap.addEventListener("submit", function(e) {
 	e.preventDefault();
 	var nameMap = document.querySelector("#idNameMap").value;
 	var descMap = document.querySelector("#idDescMap").value;	
+	var tagsMap = $("#tagsMap").tagsinput('items');
+
+	// var descMap = document.querySelector("#idDescMap").value;	
 	
 	var error = document.querySelector(".error");	
 	
@@ -85,7 +89,7 @@ formNewMap.addEventListener("submit", function(e) {
 		axios.post ("users/"+localStorage.getItem('pseudo')+"/maps", {
 			name: nameMap,
 			description: descMap,
-			taglist: "[]",
+			taglist: "["+tagsMap+"]",
 			visibility: true
 		})
 		.then(function (response) {			

@@ -126,7 +126,7 @@ input:focus{
 }
 
 .event-map{
-    box-shadow: 0 0 5px #000000 !important;
+    border: 1px solid rgba(0,0,0,.125) !important;
 }
 
 .map-author{
@@ -144,6 +144,11 @@ input:focus{
 .details-link{
     color: darkblue;
     text-decoration: underline;
+}
+
+.column {
+	display: flex;
+    flex-direction: column;
 }
 
 .card-title {

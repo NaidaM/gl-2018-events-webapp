@@ -52,7 +52,6 @@ textarea {
 	width:850px;
 	display:block;
 	margin:0 auto;
-	padding-bottom: 50px;
 }
 
 .mapLabel {
@@ -121,8 +120,11 @@ textarea {
 
 
 #arrow-left, #arrow-right {
-	background-color: #6c757d;
-	color: white;
+	border: none;
+	outline: none;
+	box-shadow: none;
+	font-size: 2em;
+	color: #2f4f4f;
 	height: 50px;
 	width: 50px;
 }
@@ -148,9 +150,39 @@ textarea {
 	margin-right: 10px;
 }
 
+.card {
+	height: 110px;
+}
+.card-body {
+	padding: 3px 15px;
+}
+.card-text {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 #createMap {
-	color: #2f4f4f;
+	margin-left: 10px;
+	color: #10707f;
 	cursor: pointer;
 	height: 85px;
 	outline: none;
 }
+
+.sharDelBtn {
+	cursor: pointer;
+    font-size: 1.5em;
+    height: 60px;
+    width: 60px;
+    border: solid;
+    color: #f8f9fa;
+    background-color: #10707f;
+    border-radius: 50px;
+	margin: 10px 10px 0 0;
+}
+
+#deleteMap, #shareMap {
+    outline: none;	
+}
+
