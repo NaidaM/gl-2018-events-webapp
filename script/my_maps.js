@@ -74,11 +74,14 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 	var nameMap = document.querySelector("#idNameMap").value;
 	var descMap = document.querySelector("#idDescMap").value;	
 	var tags = $("#tagsMap").tagsinput('items');
+
+	console.log(tags);
 	var tagsMap = [];
-	if (tags!=null) 
-		for (var tag in tags) {
-			tagsMap.push('{"name":"'+tags[tag]+'"}');
-		}
+	if (tags!=null) {
+        for (var  i = 0;i<tags.length;i++) {
+            tagsMap.push({"name": tags[i] });
+        }
+    }
 
 	var sharedMap = !$("#idPublic").is(":checked");
 	
@@ -98,13 +101,13 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 			name: nameMap,
 			description: descMap,
 			isPrivate: sharedMap,
-			tags: [{"name":"tag"}],
+			tags: tagsMap,
 			friends: []		
 		})
 		.then(function (response) {		
 			if (response.status == 201) {
 				console.log(response.data);
-				document.location.href = "my_maps.html";
+                window.location.reload();
 			}
 		})
 		.catch(function (err) {
