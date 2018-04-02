@@ -80,9 +80,11 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 			tagsMap.push('{"name":"'+tags[tag]+'"}');
 		}
 
-	var sharedMap = $('#visibilityBtns input:radio:checked').val();
+	var sharedMap = !$("#idPublic").is(":checked");
 	
-	alert("["+tagsMap+"]");
+	if($("#idFriend").is(":checked")){
+		//get friends
+	}
 	
 	var error = document.querySelector(".error");	
 	
@@ -95,7 +97,7 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 		axios.post ("users/"+localStorage.getItem('pseudo')+"/maps", {
 			name: nameMap,
 			description: descMap,
-			isPrivate: "true",
+			isPrivate: sharedMap,
 			tags: [{"name":"tag"}],
 			friends: []		
 		})
