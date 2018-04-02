@@ -16,6 +16,7 @@
 	color:#495057;
 	font-size:6em;
 	outline:none;
+	box-shadow:none;
 }
 
 h3 {
@@ -129,12 +130,12 @@ textarea {
 	width: 50px;
 }
 #arrow-right {
-	margin-right: -60px;
+	margin-right: -40px;
 	text-align: center;
 }
 
 #arrow-left {
-	margin-left: -50px;
+	margin-left: -40px;
 	text-align: center;
 }
 

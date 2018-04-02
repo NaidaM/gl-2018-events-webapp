@@ -48,7 +48,7 @@
         <a class=" nav-link dropdown-toggle" data-toggle="dropdown" href="#"
            aria-haspopup="true" aria-expanded="false">@pseudo</a>
         <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#"  data-toggle="modal" data-target="#changePassword" >Change password</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changePassword" >Change password</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" id="logoutBtn">Logout</a>
         </div>
@@ -61,17 +61,14 @@
 <div class="container-fluid" id="containerWelcome">
 	<h3>Bienvenue sur votre espace de création de cartes personnelles !</h3>
 	<h3>Créez votre première carte :</h3>
-	<button type="button"
-            class="firstMapBtn" data-toggle="modal" data-target="#newMapModal" >
-        <i class="fas fa-plus-circle"></i></button>
-
+	<button type="button" class="firstMapBtn" data-toggle="modal" data-target="#newMapModal">
+		<i class="fas fa-plus-circle"></i>
+	</button>
 </div>
 
-
-<div  id="containerMaps">
+<div id="containerMaps">
 	<div id="mapid"></div>
-	<div id="markplace">	
-	</div>
+	<div id="markplace"></div>
 	
   <div class="row">
 
@@ -79,7 +76,7 @@
 		<i class="fas fa-plus-circle"></i>
 	</button>
 
-	<div  id="result" class="slidemaps slider slider-nav"></div>
+	<div id="mapsSlider" class="slidemaps slider slider-nav"></div>
 	
 	<div class = "column">
 		<button type="button" class="sharDelBtn" id="deleteMap" data-toggle="modal" data-target="#deleteModal">
@@ -88,7 +85,8 @@
 		<button type="button" class="sharDelBtn" id="shareMap" data-toggle="modal" data-target="#">
 			<i class="fas fa-trash-alt"></i>
 		</button>
-	<div>
+	</div>
+	
   </div>
 </div>
 
@@ -114,7 +112,6 @@
   </div>
 </div>
 
-
 <div class="modal fade" role="dialog" id="deleteModal">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -139,25 +136,25 @@
   <div class="modal-dialog modal-lg" role="document">
   
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Create new map</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+		<div class="modal-header">
+			<h5 class="modal-title">Create new map</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		</div>
 		
 		<form id="form-newMap" action='#'>	  
 			<div class="modal-body" >
 				<div class="row justify-content-center">
 					<div class="col-sm-10">
 						<div class="alert alert-danger error" role="alert" style="display: none; height:35px; padding: 5px"></div>
-						<input class="form-control" type="text" placeholder="Name of the map" name="name" id="idNameMap"> </br>
+						<input class="form-control" type="text" placeholder="Name of the map" name="name" id="idNameMap"> <br/>
 					</div>
 					<div class="col-sm-10">
-						<textarea class="form-control" placeholder="Description" name="desc" id="idDescMap"></textarea> </br>
+						<textarea class="form-control" placeholder="Description" name="desc" id="idDescMap"></textarea> <br/>
 					</div>
 					
-					<div class="col-sm-10 btn-group btn-group-toggle" data-toggle="buttons">
+					<div class="col-sm-10 btn-group btn-group-toggle" id="visibilityBtns" data-toggle="buttons">
 						<label class="btn btn-primary active">
 							<input type="radio" name="options" id="idPriv" autocomplete="off" checked> <i class="fas fa-lock"></i> Private
 						</label>&#160;
@@ -170,16 +167,15 @@
 					</div>
 					
 					<div class="col-sm-10">
-						</br><input type="text" data-role="tagsinput" placeholder="Tags" id="tagsMap">
+						<br/><input type="text" data-role="tagsinput" placeholder="Tags" id="tagsMap">
 					</div>	
 				</div>		
 			</div>
-
 			
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" id="createMapBtn">Create</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" id="createMapBtn">Create</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
 	  
 		</form>
 	  

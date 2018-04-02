@@ -11,9 +11,7 @@ if(localStorage.getItem('access_token') == null){
 }
 
 var template = _.template($("#tmpl-message").html());
-
-
-
+					
 var axios = axios.create({
   baseURL: path,
   timeout: 5000,
@@ -21,11 +19,13 @@ var axios = axios.create({
 });
 
 axios.get ("users/"+localStorage.getItem('pseudo')+"/maps") 
-		.then(function (response) {			
+		.then(function (response) {		
+			console.log(localStorage.getItem('pseudo'));	
+			
 			if (response.status == 200) {
+				
 				if(response.data.maps.length == 0){
-					document.querySelector("#containerMaps").style.visibility = "hidden";
-					document.querySelector("#containerMaps").style.display = "none";
+					//document.querySelector("#containerMaps").style.display = "none";
 					document.querySelector("#containerWelcome").style.display = "block";
 				}
 				else {
@@ -34,7 +34,7 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 					document.querySelector("#containerWelcome").style.display = "none";
 					mapsData = response.data.maps;
                     var html = template({maps: response.data.maps});
-                    $("#result").append(html);
+                    $("#mapsSlider").append(html);
                     $('.slidemaps').slick({
 						dots: true,
 						infinite: false,
@@ -63,20 +63,26 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 		.catch(function (err) {
             console.log(err);
 			if (err.response.status == 404) {
-                document.querySelector("#containerMaps").style.visibility = "hidden";
                 document.querySelector("#containerMaps").style.display = "none";
                 document.querySelector("#containerWelcome").style.display = "block";
 			}
 		});
 		
 		
-formNewMap.addEventListener("submit", function(e) {
+formNewMap.addEventListener("submit", function(e) {	//add a new map
 	e.preventDefault();
 	var nameMap = document.querySelector("#idNameMap").value;
 	var descMap = document.querySelector("#idDescMap").value;	
-	var tagsMap = $("#tagsMap").tagsinput('items');
+	var tags = $("#tagsMap").tagsinput('items');
+	var tagsMap = [];
+	if (tags!=null) 
+		for (var tag in tags) {
+			tagsMap.push('{"name":"'+tags[tag]+'"}');
+		}
 
-	// var descMap = document.querySelector("#idDescMap").value;	
+	var sharedMap = $('#visibilityBtns input:radio:checked').val();
+	
+	alert("["+tagsMap+"]");
 	
 	var error = document.querySelector(".error");	
 	
@@ -89,18 +95,19 @@ formNewMap.addEventListener("submit", function(e) {
 		axios.post ("users/"+localStorage.getItem('pseudo')+"/maps", {
 			name: nameMap,
 			description: descMap,
-			taglist: "["+tagsMap+"]",
-			visibility: true
+			isPrivate: "true",
+			tags: [{"name":"tag"}],
+			friends: []		
 		})
-		.then(function (response) {			
+		.then(function (response) {		
 			if (response.status == 201) {
 				console.log(response.data);
 				document.location.href = "my_maps.html";
 			}
 		})
 		.catch(function (err) {
-		});
-		
+			
+		});		
 	}
 });
 
