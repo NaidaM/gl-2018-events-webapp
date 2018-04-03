@@ -122,6 +122,9 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 });
 
 
+
+
+
 function clickMaps(e) {
 	e.preventDefault();
 	var idCurrMap = e.target.childNodes[1].firstChild.textContent;
@@ -137,7 +140,7 @@ function clickMaps(e) {
 		.catch(function (err) {
 				console.log(err);
 		});	
-}	
+  }
 
 	$('#visibilityBtns').change(function(){
         if($("#idFriend").is(":checked")){
@@ -146,8 +149,20 @@ function clickMaps(e) {
         else{
 			document.querySelector("#friendsListDiv").style.display = "none";
 		}
-    })
-	
+    });
+
+function deletePlace(idplace) {
+    axios.delete("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places/"+idplace)
+
+		.then(function (response) {
+            if (response.status == 200) {
+            	alert("ok");
+			}
+        })
+		.catch(function (err) {
+			console.log(err);
+    });
+}
     var map = L.map('mapid').setView([48.85, 2.35], 13);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 	
@@ -175,8 +190,12 @@ function clickMaps(e) {
 						seePicsBtn.setAttribute("data-toggle", "modal");
 						seePicsBtn.setAttribute("data-target", "#photosModal");
 						
-						var delPlaceBtn = L.DomUtil.create('button','',newMarker);
+						var delPlaceBtn = L.DomUtil.create('button',' btn btn-danger deleteBtn',newMarker);
 						delPlaceBtn.innerHTML = "Delete";
+
+						delPlaceBtn.addEventListener("click",function (e) {
+                               deletePlace(e.target.nextSibling.innerHTML);
+                        });
 					
 						var inputPlaceID = L.DomUtil.create('label','',newMarker);
 						inputPlaceID.innerHTML = response.data[i].id;
@@ -335,6 +354,7 @@ function clickMaps(e) {
 						if (response.status == 201) {					
 							inputPlaceID2.innerHTML = "ID:"+response.data.id;
 							inputPlaceID2.style.display = "none";
+
 							L.marker(e.latlng).addTo(map)
 								.bindPopup(p)
 								.openPopup();						
@@ -372,3 +392,4 @@ function createPlace() {
     btn.setAttribute('type', 'button');
     btn.innerHTML = label;
 }
+
