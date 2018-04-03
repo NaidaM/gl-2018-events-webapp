@@ -292,7 +292,7 @@ function clickMaps(e) {
                         msgPop.innerHTML = inputMsg.value+"<br />";
                         newPopup.appendChild(m);
                     }
-					else inputMsg.value = " ";
+					
                     var seePicsBtn = L.DomUtil.create('button','',newPopup);
                     seePicsBtn.innerHTML = "See photos";
                     seePicsBtn.setAttribute("data-toggle", "modal");
