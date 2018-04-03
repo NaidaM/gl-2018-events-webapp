@@ -79,10 +79,10 @@
 	<div id="mapsSlider" class="slidemaps slider slider-nav"></div>
 	
 	<div class = "column">
-		<button type="button" class="sharDelBtn" id="deleteMap" data-toggle="modal" data-target="#deleteModal">
+		<button type="button" class="sharDelBtn" id="shareMap" data-toggle="modal" data-target="#">
 			<i class="fas fa-share-alt"></i>
 		</button>
-		<button type="button" class="sharDelBtn" id="shareMap" data-toggle="modal" data-target="#">
+		<button type="button" class="sharDelBtn" id="deleteMap" data-toggle="modal" data-target="#deleteModal">
 			<i class="fas fa-trash-alt"></i>
 		</button>
 	</div>
@@ -165,6 +165,10 @@
 							<input type="radio" name="shareOption" id="idPublic" autocomplete="off"> <i class="fas fa-globe"></i> Public
 						</label>				
 					</div>
+					
+					<div class="col-md-10" id="friendsListDiv" style="display:none;">
+						<br/><input type="text" data-role="tagsinput" placeholder="Friends" id="friendsList" style="width:50%">
+					</div>	
 					
 					<div class="col-sm-10">
 						<br/><input type="text" data-role="tagsinput" placeholder="Tags" id="tagsMap">
@@ -270,6 +274,15 @@
 <script src="script/app.js"></script>
 
 <script>
+	$('#visibilityBtns').change(function(){
+        if($("#idFriend").is(":checked")){
+			document.querySelector("#friendsListDiv").style.display = "inline";
+		}
+        else{
+			document.querySelector("#friendsListDiv").style.display = "none";
+		}
+    })
+	
     var map = L.map('mapid').setView([48.85, 2.35], 13);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 

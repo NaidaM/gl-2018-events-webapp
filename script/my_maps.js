@@ -72,7 +72,8 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 formNewMap.addEventListener("submit", function(e) {	//add a new map
 	e.preventDefault();
 	var nameMap = document.querySelector("#idNameMap").value;
-	var descMap = document.querySelector("#idDescMap").value;	
+	var descMap = document.querySelector("#idDescMap").value;
+	var friendsList = [];	
 	var tags = $("#tagsMap").tagsinput('items');
 
 	console.log(tags);
@@ -86,7 +87,12 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 	var sharedMap = !$("#idPublic").is(":checked");
 	
 	if($("#idFriend").is(":checked")){
-		//get friends
+		var friends = $("#friendsList").tagsinput('items');
+		if (friends!=null) {
+			for (var i = 0;i<friends.length;i++) {
+				friendsList.push({"pseudo": friends[i] });
+			}
+		}
 	}
 	
 	var error = document.querySelector(".error");	
@@ -102,7 +108,7 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 			description: descMap,
 			isPrivate: sharedMap,
 			tags: tagsMap,
-			friends: []		
+			friends: friendsList	
 		})
 		.then(function (response) {		
 			if (response.status == 201) {

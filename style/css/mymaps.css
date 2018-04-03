@@ -89,7 +89,7 @@ textarea {
 .tag {
 	background-color: #6193b6;
 	display: inline;
-    padding: .2em .6em .3em;
+    padding: .4em .5em .3em .5em;
     font-size: 75%;
     font-weight: 700;
     line-height: 1;
@@ -98,6 +98,18 @@ textarea {
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em;
+}
+
+#friendsListDiv > .bootstrap-tagsinput {
+	min-width: 80% !important;	
+}
+
+#friendsListDiv > .bootstrap-tagsinput > .tag {
+	background-color: transparent;
+	color: black;
+    font-size: 90%;
+    font-weight: 300;
+	
 }
 
 #addPhotoBtn{
