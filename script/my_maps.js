@@ -168,12 +168,20 @@ function clickMaps(e) {
 						var m = L.DomUtil.create('div');
 						var msgPop = L.DomUtil.create('label', '', m);
 						msgPop.innerHTML = response.data[i].description +"<br />";
-						newMarker.appendChild(m);		
+						newMarker.appendChild(m);
 						
 						var seePicsBtn = L.DomUtil.create('button','',newMarker);
 						seePicsBtn.innerHTML = "See photos";
 						seePicsBtn.setAttribute("data-toggle", "modal");
 						seePicsBtn.setAttribute("data-target", "#photosModal");
+						
+						var delPlaceBtn = L.DomUtil.create('button','',newMarker);
+						delPlaceBtn.innerHTML = "Delete";
+					
+						var inputPlaceID = L.DomUtil.create('label','',newMarker);
+						inputPlaceID.innerHTML = response.data[i].id;
+						inputPlaceID.style.display = "none";
+						
 
 						var newPopup = L.popup()
 							.setContent(newMarker)
@@ -281,6 +289,7 @@ function clickMaps(e) {
             L.DomEvent.on(okBtn, 'click', function() {
                 if (inputName.value != "") {
                     var newPopup = L.DomUtil.create('div');
+						
                     var n = L.DomUtil.create('div');
                     n.style.textAlign = "center";
                     var titlePop = L.DomUtil.create('label', '', n);
@@ -294,9 +303,20 @@ function clickMaps(e) {
                     }
 					
                     var seePicsBtn = L.DomUtil.create('button','',newPopup);
-                    seePicsBtn.innerHTML = "See photos";
+                    seePicsBtn.innerHTML = "Photos";
                     seePicsBtn.setAttribute("data-toggle", "modal");
                     seePicsBtn.setAttribute("data-target", "#photosModal");
+					
+					var delPlaceBtn = L.DomUtil.create('button','',newPopup);
+                    delPlaceBtn.innerHTML = "Delete";
+					L.DomEvent.on(delPlaceBtn, 'click', function() {
+						if (confirm("Delete the place ?")) {
+							/*var placeID = 
+							axios.delete ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places/"+)*/
+						};
+					});
+											
+					var inputPlaceID2 = L.DomUtil.create('label','',newPopup);
 
                     var p = L.popup()
                         .setContent(newPopup)
@@ -312,14 +332,16 @@ function clickMaps(e) {
 					})
 					
 					.then(function (response) {		
-						if (response.status == 201) {
+						if (response.status == 201) {					
+							inputPlaceID2.innerHTML = "ID:"+response.data.id;
+							inputPlaceID2.style.display = "none";
 							L.marker(e.latlng).addTo(map)
 								.bindPopup(p)
 								.openPopup();						
 						}
 					})
 					.catch(function (err) {
-						
+						console.log(err);
 					});	
                 }
                 else {
