@@ -22,8 +22,7 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 		.then(function (response) {		
 			console.log(localStorage.getItem('pseudo'));	
 			
-			if (response.status == 200) {
-				
+			if (response.status == 200) {				
 				if(response.data.maps.length == 0){
 					//document.querySelector("#containerMaps").style.display = "none";
 					document.querySelector("#containerWelcome").style.display = "block";
@@ -57,7 +56,7 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 
                     }
 				}
-				console.log(response.data);	
+				console.log(response.data);		
 			}			
 		})
 		.catch(function (err) {
@@ -75,8 +74,6 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 	var descMap = document.querySelector("#idDescMap").value;
 	var friendsList = [];	
 	var tags = $("#tagsMap").tagsinput('items');
-
-	console.log(tags);
 	var tagsMap = [];
 	if (tags!=null) {
         for (var  i = 0;i<tags.length;i++) {
@@ -111,7 +108,9 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 			friends: friendsList	
 		})
 		.then(function (response) {		
-			if (response.status == 201) {
+			if (response.status == 201) {				
+                localStorage.removeItem('current_map');
+				localStorage.setItem('current_map', JSON.stringify(response.data));
 				console.log(response.data);
                 window.location.reload();
 			}
@@ -125,5 +124,229 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 
 function clickMaps(e) {
 	e.preventDefault();
-	console.log(e.target.childNodes[1].firstChild.textContent);
+	var idCurrMap = e.target.childNodes[1].firstChild.textContent;
+		
+	axios.get ("maps/"+idCurrMap) 
+		.then(function (response) {						
+			if (response.status == 200) {					
+                localStorage.removeItem('current_map');
+				localStorage.setItem('current_map', JSON.stringify(response.data));	
+                window.location.reload();
+			}			
+		})
+		.catch(function (err) {
+				console.log(err);
+		});	
 }	
+
+	$('#visibilityBtns').change(function(){
+        if($("#idFriend").is(":checked")){
+			document.querySelector("#friendsListDiv").style.display = "inline";
+		}
+        else{
+			document.querySelector("#friendsListDiv").style.display = "none";
+		}
+    })
+	
+    var map = L.map('mapid').setView([48.85, 2.35], 13);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+	
+	if (localStorage.getItem('current_map') !== null) {		
+		axios.get ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places") 
+			.then(function (response) {		
+			
+				if (response.status == 200) {
+					console.log(response.data);					
+					for(var i = 0; i<response.data.length; i++){						
+						var newMarker = L.DomUtil.create('div');
+						var n = L.DomUtil.create('div');
+						n.style.textAlign = "center";
+						var titlePop = L.DomUtil.create('label', '', n);
+						titlePop.innerHTML = "<b>"+ response.data[i].name +"</b>";
+						newMarker.appendChild(n);
+						
+						var m = L.DomUtil.create('div');
+						var msgPop = L.DomUtil.create('label', '', m);
+						msgPop.innerHTML = response.data[i].description +"<br />";
+						newMarker.appendChild(m);		
+						
+						var seePicsBtn = L.DomUtil.create('button','',newMarker);
+						seePicsBtn.innerHTML = "See photos";
+						seePicsBtn.setAttribute("data-toggle", "modal");
+						seePicsBtn.setAttribute("data-target", "#photosModal");
+
+						var newPopup = L.popup()
+							.setContent(newMarker)
+							.setLatLng(L.latLng(response.data[i].latitude,response.data[i].longitude));
+							
+						L.marker(L.latLng(response.data[i].latitude,response.data[i].longitude)).addTo(map)
+							.bindPopup(newPopup);			
+					}
+				}			
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	}
+
+
+    function createButton(label, container) {
+        var btn = L.DomUtil.create('button', 'addedbtn', container);
+        btn.setAttribute('type', 'button');
+        btn.innerHTML = label;
+        return btn;
+    }
+
+    function addImage(fileInput, container) {
+        if (fileInput.files.length >0) {
+            var file = fileInput.files[0];
+            var reader  = new FileReader();
+            reader.onload = function(e)  {
+                var image = document.createElement("img");
+                image.src = e.target.result;
+                image.style.maxWidth = '300px'
+                image.style.maxHeight = '300px'
+
+                container.appendChild(image);
+            }
+            reader.readAsDataURL(file);
+        }
+
+    }
+
+    map.on('click', function(e) {
+        var container = L.DomUtil.create('div'),
+            contMark = L.DomUtil.create('div'),
+            markBtn = createButton('Mark place', contMark);
+        contMark.className = "markContainer";
+        container.appendChild(contMark);
+
+        var contLoc = L.DomUtil.create('div'),
+            startBtn = createButton('Start from this location', contLoc),
+            destBtn = createButton('Go to this location', contLoc);
+        container.appendChild(contLoc);
+
+        /* L.DomEvent.on(startBtn, 'click', function() { -->
+        <!-- control.spliceWaypoints(0, 1, e.latlng); -->
+        <!-- map.closePopup(); -->
+        <!-- }); -->
+
+        <!-- L.DomEvent.on(destBtn, 'click', function() { -->
+        <!-- control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng); -->
+        <!-- map.closePopup(); -->
+        <!-- }); -->*/
+
+        L.DomEvent.on(markBtn, 'click', function() {
+            var contName = document.createElement("div");
+            var labelName = L.DomUtil.create("label",'labelTitle',contName);
+            labelName.innerHTML = "Place name";
+            var inputName = document.createElement("input");
+            inputName.type = "text";
+            contName.appendChild(inputName);
+            container.appendChild(contName);
+
+            var contMsg = document.createElement("div");
+            var label = L.DomUtil.create("label",'labelTitle',contMsg);
+            label.innerHTML = "Message";
+            var inputMsg = document.createElement("textarea");
+            inputMsg.rows = "4";
+            inputMsg.maxLength = "160";
+            inputMsg.cols = "35";
+            contMsg.appendChild(inputMsg);
+            container.appendChild(contMsg);
+
+            var contPict = document.createElement("div");
+            label = document.createElement("label");
+            label.innerHTML = "Pictures";
+            contPict.appendChild(label);
+            var pic = document.createElement("input");
+            pic.type = "file";
+            contPict.appendChild(pic);
+
+            $('#addPhotoBtn').click(function(){
+                var fileInput = document.createElement("input");
+                fileInput.type = "file";
+
+                $(fileInput).trigger('click');
+                $(fileInput).change(function(){
+                    addImage(fileInput, document.querySelector("#modalBodyPic"));
+                })
+            });
+
+            var contValid = L.DomUtil.create('div'),
+                okBtn = createButton('Validate', contValid);
+            contValid.className = "markContainer";
+            container.appendChild(contValid);
+
+            L.DomEvent.on(okBtn, 'click', function() {
+                if (inputName.value != "") {
+                    var newPopup = L.DomUtil.create('div');
+                    var n = L.DomUtil.create('div');
+                    n.style.textAlign = "center";
+                    var titlePop = L.DomUtil.create('label', '', n);
+                    titlePop.innerHTML = "<b>"+inputName.value+"</b>";
+                    newPopup.appendChild(n);
+                    if (inputMsg.value != ""){
+                        var m = L.DomUtil.create('div');
+                        var msgPop = L.DomUtil.create('label', '', m);
+                        msgPop.innerHTML = inputMsg.value+"<br />";
+                        newPopup.appendChild(m);
+                    }
+					else inputMsg.value = " ";
+                    var seePicsBtn = L.DomUtil.create('button','',newPopup);
+                    seePicsBtn.innerHTML = "See photos";
+                    seePicsBtn.setAttribute("data-toggle", "modal");
+                    seePicsBtn.setAttribute("data-target", "#photosModal");
+
+                    var p = L.popup()
+                        .setContent(newPopup)
+                        .setLatLng(e.latlng);
+						
+					console.log(inputName.value, inputMsg.value,e.latlng.lat,e.latlng.lng);
+											
+					axios.post ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places", {
+						name: inputName.value,
+						description: inputMsg.value,
+						latitude: e.latlng.lat,
+						longitude: e.latlng.lng	
+					})
+					
+					.then(function (response) {		
+						if (response.status == 201) {
+							L.marker(e.latlng).addTo(map)
+								.bindPopup(p)
+								.openPopup();						
+						}
+					})
+					.catch(function (err) {
+						
+					});	
+                }
+                else {
+                    labelName.style.color = "red";
+                    labelName.innerHTML = "Place name (essential)"
+                }
+            });
+
+            markBtn.style.display = 'none';
+        });
+
+        L.popup()
+            .setContent(container)
+            .setLatLng(e.latlng)
+            .openOn(map);
+
+    });
+    /*<!-- L.Routing.control({ -->
+    <!-- waypoints: [ -->
+    <!-- L.latLng(48.74, 2.40), -->
+    <!-- L.latLng(48.1, 2.36) -->
+    <!-- ] -->
+    <!-- }).addTo(map); -->*/
+	
+	
+function createPlace() {
+    var btn = L.DomUtil.create('button', 'addedbtn', container);
+    btn.setAttribute('type', 'button');
+    btn.innerHTML = label;
+}
