@@ -23,11 +23,6 @@ commun, VTC, etc.).
 ### Members
 
 1- Yannis AMOUZOU
-2- Johann HOSPICE
-3- Naida MEFTAH
-4- Elouiza HAMLA
-5- Zakaria AGGOUN
-6- Imed Eddine KEMMOUCHE
-7- Eric CHEANG
-
-
+2- Naida MEFTAH
+3- Imed Eddine KEMMOUCHE
+4- Eric CHEANG
