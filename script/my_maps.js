@@ -156,7 +156,7 @@ function deletePlace(idplace) {
 
 		.then(function (response) {
             if (response.status == 200) {
-            	alert("ok");
+            	
 			}
         })
 		.catch(function (err) {
@@ -180,17 +180,19 @@ function deletePlace(idplace) {
 						titlePop.innerHTML = "<b>"+ response.data[i].name +"</b>";
 						newMarker.appendChild(n);
 						
-						var m = L.DomUtil.create('div');
-						var msgPop = L.DomUtil.create('label', '', m);
-						msgPop.innerHTML = response.data[i].description +"<br />";
-						newMarker.appendChild(m);
+						if (response.data[i].description!="") {
+							var m = L.DomUtil.create('div');
+							var msgPop = L.DomUtil.create('label', '', m);
+							msgPop.innerHTML = response.data[i].description +"<br />";
+							newMarker.appendChild(m);
+						}
 						
-						var seePicsBtn = L.DomUtil.create('button','',newMarker);
-						seePicsBtn.innerHTML = "See photos";
+						var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
+						seePicsBtn.innerHTML = "Photos";
 						seePicsBtn.setAttribute("data-toggle", "modal");
 						seePicsBtn.setAttribute("data-target", "#photosModal");
 						
-						var delPlaceBtn = L.DomUtil.create('button',' btn btn-danger deleteBtn',newMarker);
+						var delPlaceBtn = L.DomUtil.create('button',' btn btn-danger popupBtn',newMarker);
 						delPlaceBtn.innerHTML = "Delete";
 
 						delPlaceBtn.addEventListener("click",function (e) {
@@ -218,7 +220,7 @@ function deletePlace(idplace) {
 
 
     function createButton(label, container) {
-        var btn = L.DomUtil.create('button', 'addedbtn', container);
+        var btn = L.DomUtil.create('button', 'btn btn-primary popupBtn', container);
         btn.setAttribute('type', 'button');
         btn.innerHTML = label;
         return btn;
@@ -247,8 +249,12 @@ function deletePlace(idplace) {
             markBtn = createButton('Mark place', contMark);
         contMark.className = "markContainer";
         container.appendChild(contMark);
-
-        var contLoc = L.DomUtil.create('div'),
+		
+		L.popup()
+				.setContent(container)
+				.setLatLng(e.latlng)
+				.openOn(map);
+       /* var contLoc = L.DomUtil.create('div'),
             startBtn = createButton('Start from this location', contLoc),
             destBtn = createButton('Go to this location', contLoc);
         container.appendChild(contLoc);
@@ -264,6 +270,7 @@ function deletePlace(idplace) {
         <!-- }); -->*/
 
         L.DomEvent.on(markBtn, 'click', function() {
+			map.closePopup();
             var contName = document.createElement("div");
             var labelName = L.DomUtil.create("label",'labelTitle',contName);
             labelName.innerHTML = "Place name";
@@ -278,7 +285,7 @@ function deletePlace(idplace) {
             var inputMsg = document.createElement("textarea");
             inputMsg.rows = "4";
             inputMsg.maxLength = "160";
-            inputMsg.cols = "35";
+            inputMsg.cols = "28";
             contMsg.appendChild(inputMsg);
             container.appendChild(contMsg);
 
@@ -304,6 +311,11 @@ function deletePlace(idplace) {
                 okBtn = createButton('Validate', contValid);
             contValid.className = "markContainer";
             container.appendChild(contValid);
+			
+			L.popup({maxWidth : 200})
+            .setContent(container)
+            .setLatLng(e.latlng)
+            .openOn(map);
 
             L.DomEvent.on(okBtn, 'click', function() {
                 if (inputName.value != "") {
@@ -321,12 +333,12 @@ function deletePlace(idplace) {
                         newPopup.appendChild(m);
                     }
 					
-                    var seePicsBtn = L.DomUtil.create('button','',newPopup);
+                    var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newPopup);
                     seePicsBtn.innerHTML = "Photos";
                     seePicsBtn.setAttribute("data-toggle", "modal");
                     seePicsBtn.setAttribute("data-target", "#photosModal");
 					
-					var delPlaceBtn = L.DomUtil.create('button','',newPopup);
+					var delPlaceBtn = L.DomUtil.create('button','btn btn-danger popupBtn',newPopup);
                     delPlaceBtn.innerHTML = "Delete";
 					L.DomEvent.on(delPlaceBtn, 'click', function() {
 						if (confirm("Delete the place ?")) {

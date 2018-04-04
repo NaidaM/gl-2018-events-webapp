@@ -30,8 +30,10 @@ h3 {
 	text-align: center;
 }
 
-.addedbtn {
-	margin : 4px;
+.popupBtn {
+	margin : 3px;
+	padding: 2px 5px;
+	font-size: 1.2em;
 }
 
 .markContainer > button{
