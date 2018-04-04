@@ -3,6 +3,7 @@ var port = "8080";
 var path = host+":"+port+"/api/v1/"
 var maps;
 var mapsData;
+var currentMarker;
 
 var formNewMap = document.querySelector("#form-newMap");
 
@@ -121,10 +122,6 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 	}
 });
 
-
-
-
-
 function clickMaps(e) {
 	e.preventDefault();
 	var idCurrMap = e.target.childNodes[1].firstChild.textContent;
@@ -156,7 +153,8 @@ function deletePlace(idplace) {
 
 		.then(function (response) {
             if (response.status == 200) {
-            	
+            	map.closePopup();
+				map.removeLayer(currentMarker);
 			}
         })
 		.catch(function (err) {
@@ -201,14 +199,15 @@ function deletePlace(idplace) {
 					
 						var inputPlaceID = L.DomUtil.create('label','',newMarker);
 						inputPlaceID.innerHTML = response.data[i].id;
-						inputPlaceID.style.display = "none";
-						
+						inputPlaceID.style.display = "none";						
 
 						var newPopup = L.popup()
 							.setContent(newMarker)
 							.setLatLng(L.latLng(response.data[i].latitude,response.data[i].longitude));
-							
-						L.marker(L.latLng(response.data[i].latitude,response.data[i].longitude)).addTo(map)
+						
+						var createMarker = L.marker(L.latLng(response.data[i].latitude,response.data[i].longitude));
+						createMarker.on('click', function(e){currentMarker = this;});						
+						createMarker.addTo(map)
 							.bindPopup(newPopup);			
 					}
 				}			
@@ -276,6 +275,7 @@ function deletePlace(idplace) {
             labelName.innerHTML = "Place name";
             var inputName = document.createElement("input");
             inputName.type = "text";
+            inputName.maxLength = "30";
             contName.appendChild(inputName);
             container.appendChild(contName);
 
@@ -340,14 +340,12 @@ function deletePlace(idplace) {
 					
 					var delPlaceBtn = L.DomUtil.create('button','btn btn-danger popupBtn',newPopup);
                     delPlaceBtn.innerHTML = "Delete";
-					L.DomEvent.on(delPlaceBtn, 'click', function() {
-						if (confirm("Delete the place ?")) {
-							/*var placeID = 
-							axios.delete ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places/"+)*/
-						};
+					
+					delPlaceBtn.addEventListener("click",function (e) {
+						deletePlace(e.target.nextSibling.innerHTML);
 					});
-											
-					var inputPlaceID2 = L.DomUtil.create('label','',newPopup);
+					
+					var inputPlaceID2 = L.DomUtil.create('label','',newPopup);					
 
                     var p = L.popup()
                         .setContent(newPopup)
@@ -364,12 +362,16 @@ function deletePlace(idplace) {
 					
 					.then(function (response) {		
 						if (response.status == 201) {					
-							inputPlaceID2.innerHTML = "ID:"+response.data.id;
+							inputPlaceID2.innerHTML = response.data.id;
 							inputPlaceID2.style.display = "none";
+							
 
-							L.marker(e.latlng).addTo(map)
+							var createMarker2 = L.marker(e.latlng);
+							createMarker2.on('click', function(e){currentMarker = this;});
+							createMarker2.addTo(map)
 								.bindPopup(p)
-								.openPopup();						
+								.openPopup();
+							currentMarker = createMarker2;						
 						}
 					})
 					.catch(function (err) {
