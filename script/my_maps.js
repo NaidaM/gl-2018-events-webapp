@@ -21,18 +21,20 @@ var axios = axios.create({
 
 axios.get ("users/"+localStorage.getItem('pseudo')+"/maps") 
 		.then(function (response) {		
-			console.log(localStorage.getItem('pseudo'));	
 			
 			if (response.status == 200) {				
 				if(response.data.maps.length == 0){
-					//document.querySelector("#containerMaps").style.display = "none";
+					document.querySelector("#containerMaps").style.display = "none";
 					document.querySelector("#containerWelcome").style.display = "block";
 				}
 				else {
 					document.querySelector("#containerMaps").style.visibility = "visible";
                     document.querySelector("#containerMaps").style.display = "block";
-					document.querySelector("#containerWelcome").style.display = "none";
-					mapsData = response.data.maps;
+					document.querySelector("#containerWelcome").style.display = "none";					
+					mapsData = response.data.maps;		
+					localStorage.removeItem('current_map');
+					localStorage.setItem('current_map', JSON.stringify(mapsData[0])); //at 1st load, load last map created
+					
                     var html = template({maps: response.data.maps});
                     $("#mapsSlider").append(html);
                     $('.slidemaps').slick({
@@ -62,10 +64,12 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 		})
 		.catch(function (err) {
             console.log(err);
-			if (err.response.status == 404) {
+            document.querySelector("#containerMaps").style.display = "none";
+            document.querySelector("#containerWelcome").style.display = "block";
+			/*if (err.response.status == 404) {
                 document.querySelector("#containerMaps").style.display = "none";
                 document.querySelector("#containerWelcome").style.display = "block";
-			}
+			}*/
 		});
 		
 		
@@ -137,7 +141,7 @@ function clickMaps(e) {
 		.catch(function (err) {
 				console.log(err);
 		});	
-  }
+}
 
 	$('#visibilityBtns').change(function(){
         if($("#idFriend").is(":checked")){
@@ -165,7 +169,7 @@ function deletePlace(idplace) {
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 	
 	if (localStorage.getItem('current_map') !== null) {		
-		axios.get ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places") 
+		axios.get ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places") //get places
 			.then(function (response) {		
 			
 				if (response.status == 200) {
