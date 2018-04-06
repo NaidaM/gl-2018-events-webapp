@@ -115,7 +115,7 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
                 localStorage.removeItem('current_map');
 				localStorage.setItem('current_map', JSON.stringify(response.data));
 				console.log(response.data);
-                window.location.reload(true);
+                location.reload(true);
 			}
 		})
 		.catch(function (err) {
@@ -133,7 +133,7 @@ function clickMaps(e) {
 			if (response.status == 200) {	
                 localStorage.removeItem('current_map');
 				localStorage.setItem('current_map', JSON.stringify(response.data));	
-                window.location.reload(true);
+                location.reload(true);
 			}			
 		})
 		.catch(function (err) {
@@ -168,7 +168,7 @@ function deleteMap(idmap) {
 						localStorage.setItem('current_map', JSON.stringify(mapsData[0]));							
 					}
 				}
-				window.location.reload(true);
+				location.reload(true);
 			}
         })
 		.catch(function (err) {

@@ -1,0 +1,12 @@
+.card-title{
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+.card-text{
+	font-size: 15px;
+}
+
+.card-body{
+	padding: 5px;
+}

@@ -168,6 +168,12 @@ textarea {
 .card {
 	height: 110px;
 }
+.card-title {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .card-body {
 	padding: 3px 15px;
 }
