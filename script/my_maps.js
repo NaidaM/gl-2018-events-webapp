@@ -143,14 +143,31 @@ function clickMaps(e) {
 		});	
 }
 
-	$('#visibilityBtns').change(function(){
-        if($("#idFriend").is(":checked")){
-			document.querySelector("#friendsListDiv").style.display = "inline";
-		}
-        else{
-			document.querySelector("#friendsListDiv").style.display = "none";
-		}
+$('#visibilityBtns').change(function(){
+    if($("#idFriend").is(":checked")){
+		document.querySelector("#friendsListDiv").style.display = "inline";
+	}
+    else{
+		document.querySelector("#friendsListDiv").style.display = "none";
+	}
+});
+
+$('#delMapBtn').click(function(){
+	deleteMap(JSON.parse(localStorage.getItem('current_map')).id);
+});
+
+function deleteMap(idmap) {
+    axios.delete("users/"+localStorage.getItem('pseudo')+"/maps/"+idmap)
+
+		.then(function (response) {
+            if (response.status == 200) {
+                window.location.reload();
+			}
+        })
+		.catch(function (err) {
+			console.log(err);
     });
+}
 
 function deletePlace(idplace) {
     axios.delete("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places/"+idplace)
