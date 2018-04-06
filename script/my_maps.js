@@ -31,9 +31,7 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 					document.querySelector("#containerMaps").style.visibility = "visible";
                     document.querySelector("#containerMaps").style.display = "block";
 					document.querySelector("#containerWelcome").style.display = "none";					
-					mapsData = response.data.maps;		
-					localStorage.removeItem('current_map');
-					localStorage.setItem('current_map', JSON.stringify(mapsData[0])); //at 1st load, load last map created
+					mapsData = response.data.maps;						
 					
                     var html = template({maps: response.data.maps});
                     $("#mapsSlider").append(html);
@@ -113,11 +111,11 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 			friends: friendsList	
 		})
 		.then(function (response) {		
-			if (response.status == 201) {				
+			if (response.status == 201) {
                 localStorage.removeItem('current_map');
 				localStorage.setItem('current_map', JSON.stringify(response.data));
 				console.log(response.data);
-                window.location.reload();
+                window.location.reload(true);
 			}
 		})
 		.catch(function (err) {
@@ -132,10 +130,10 @@ function clickMaps(e) {
 		
 	axios.get ("maps/"+idCurrMap) 
 		.then(function (response) {						
-			if (response.status == 200) {					
+			if (response.status == 200) {	
                 localStorage.removeItem('current_map');
 				localStorage.setItem('current_map', JSON.stringify(response.data));	
-                window.location.reload();
+                window.location.reload(true);
 			}			
 		})
 		.catch(function (err) {
@@ -161,7 +159,16 @@ function deleteMap(idmap) {
 
 		.then(function (response) {
             if (response.status == 200) {
-                window.location.reload();
+				localStorage.removeItem('current_map');						
+				if (mapsData.length > 1) {
+					if (mapsData[0].id == idmap){
+						localStorage.setItem('current_map', JSON.stringify(mapsData[1]));							
+					}
+					else {
+						localStorage.setItem('current_map', JSON.stringify(mapsData[0]));							
+					}
+				}
+				window.location.reload(true);
 			}
         })
 		.catch(function (err) {
