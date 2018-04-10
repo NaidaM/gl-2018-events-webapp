@@ -2,7 +2,6 @@ var host = "http://localhost";
 var port = "8080";
 var path = host+":"+port+"/api/v1/";
 var map;
-var currentPubMap;
 					
 var axios = axios.create({
   baseURL: path,
@@ -38,12 +37,11 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps/friends")
 				mapTitle.className = "card-title";
 				mapTitle.innerHTML = response.data[i].name;
 				mapTitle.id = response.data[i].id;
-				mapTitle.dataset.friend = response.data[i].user.pseudo;
 				mapTitle.addEventListener("click",function (e) {
 					$("#maptitle").text(e.target.innerHTML);
 					map.remove();
 					loadMap();
-					getMap(e.target.id, e.target.dataset.friend);
+					getMap(e.target.id);
 				});		
 				bodyDiv.appendChild(mapTitle);
 
@@ -79,8 +77,8 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps/friends")
 	});
 	
 
-function getMap (idmap, friendPseudo) {	
-	axios.get ("users/"+friendPseudo+"/maps/"+idmap+"/places") //get places
+function getMap (idmap) {	
+	axios.get ("/maps/"+idmap+"/places") //get places
 			.then(function (response) {		
 			
 				if (response.status == 200) {
