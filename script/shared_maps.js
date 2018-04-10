@@ -38,12 +38,12 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps/friends")
 				mapTitle.className = "card-title";
 				mapTitle.innerHTML = response.data[i].name;
 				mapTitle.id = response.data[i].id;
+				mapTitle.dataset.friend = response.data[i].user.pseudo;
 				mapTitle.addEventListener("click",function (e) {
 					$("#maptitle").text(e.target.innerHTML);
-					currentPubMap = e.target.id;
 					map.remove();
 					loadMap();
-					getMap(currentPubMap);
+					getMap(e.target.id, e.target.dataset.friend);
 				});		
 				bodyDiv.appendChild(mapTitle);
 
@@ -79,8 +79,8 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps/friends")
 	});
 	
 
-function getMap (idmap) {	
-	axios.get ("users/"+localStorage.getItem('pseudo')+"maps/friends/"+idmap+"/places") //get places
+function getMap (idmap, friendPseudo) {	
+	axios.get ("users/"+friendPseudo+"/maps/"+idmap+"/places") //get places
 			.then(function (response) {		
 			
 				if (response.status == 200) {
