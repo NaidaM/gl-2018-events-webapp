@@ -10,3 +10,12 @@
 .card-body{
 	padding: 5px;
 }
+
+#mapid {
+	height: 60vh;
+}	
+
+.modal-dialog {
+    max-width: 90vh;
+}
+

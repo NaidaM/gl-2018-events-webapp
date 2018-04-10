@@ -189,8 +189,9 @@ function deletePlace(idplace) {
 			console.log(err);
     });
 }
-    var map = L.map('mapid').setView([48.85, 2.35], 13);
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+var map = L.map('mapid').setView([48.85, 2.35], 13);
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 	
 	if (localStorage.getItem('current_map') !== null) {		
 		axios.get ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places") //get places
