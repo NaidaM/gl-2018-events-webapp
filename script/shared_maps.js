@@ -1,11 +1,24 @@
 var host = "http://localhost";
 var port = "8080";
 var path = host+":"+port+"/api/v1/";
+var map;
+var currentPubMap;
 					
 var axios = axios.create({
   baseURL: path,
   timeout: 5000,
   headers: {'Authorization': localStorage.getItem('access_token')}
+});
+
+function loadMap() {
+	map = L.map('mapid').setView([48.85, 2.35], 13);
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+}
+
+loadMap();
+	
+$("#mapPopup").on("shown.bs.modal", function () { 
+    map.invalidateSize(true);
 });
 
 axios.get ("users/"+localStorage.getItem('pseudo')+"/maps/friends") 
@@ -19,9 +32,19 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps/friends")
 				var bodyDiv = document.createElement("div");
 				bodyDiv.className = "card-body";
 				
-				var mapTitle = document.createElement("h5");
+				var mapTitle = document.createElement("a");
+				mapTitle.href="#mapPopup";
+				mapTitle.setAttribute("data-toggle", "modal");
 				mapTitle.className = "card-title";
 				mapTitle.innerHTML = response.data[i].name;
+				mapTitle.id = response.data[i].id;
+				mapTitle.addEventListener("click",function (e) {
+					$("#maptitle").text(e.target.innerHTML);
+					currentPubMap = e.target.id;
+					map.remove();
+					loadMap();
+					getMap(currentPubMap);
+				});		
 				bodyDiv.appendChild(mapTitle);
 
 				var mapDescr = document.createElement("p");
@@ -54,3 +77,52 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps/friends")
 	.catch(function (err) {
           console.log(err);
 	});
+	
+
+function getMap (idmap) {	
+	axios.get ("users/"+localStorage.getItem('pseudo')+"maps/friends/"+idmap+"/places") //get places
+			.then(function (response) {		
+			
+				if (response.status == 200) {
+					console.log(response.data);					
+					for(var i = 0; i<response.data.length; i++){						
+						var newMarker = L.DomUtil.create('div');
+						newMarker.className = "centeredContainer";
+						
+						var n = L.DomUtil.create('div');
+						var titlePop = L.DomUtil.create('label', '', n);
+						titlePop.innerHTML = "<b>"+ response.data[i].name +"</b>";
+						newMarker.appendChild(n);
+						
+						if (response.data[i].description!="") {
+							var m = L.DomUtil.create('div');
+							var msgPop = L.DomUtil.create('label', '', m);
+							m.style.textAlign = "left";						
+							msgPop.innerHTML = response.data[i].description +"<br />";
+							newMarker.appendChild(m);
+						}
+						
+						var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
+						seePicsBtn.innerHTML = "Photos";
+						seePicsBtn.setAttribute("data-toggle", "modal");
+						seePicsBtn.setAttribute("data-target", "#photosModal");
+											
+						var inputPlaceID = L.DomUtil.create('label','',newMarker);
+						inputPlaceID.innerHTML = response.data[i].id;
+						inputPlaceID.style.display = "none";						
+
+						var newPopup = L.popup()
+							.setContent(newMarker)
+							.setLatLng(L.latLng(response.data[i].latitude,response.data[i].longitude));
+						
+						var createMarker = L.marker(L.latLng(response.data[i].latitude,response.data[i].longitude));
+						createMarker.on('click', function(e){currentMarker = this;});						
+						createMarker.addTo(map)
+							.bindPopup(newPopup);			
+					}
+				}			
+			})
+			.catch(function (err) {
+				console.log(err);
+			});
+	}
