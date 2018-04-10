@@ -114,10 +114,10 @@ textarea {
 
 #modalDialogPhotos {
     display: table;
-    max-width: none;
+    max-width: 150vh;
 }
 
-#modal-body {
+.modal-body {
 	max-height: 60vh;
 	text-align: center;
 	overflow-y: scroll
