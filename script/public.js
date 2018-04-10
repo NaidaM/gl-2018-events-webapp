@@ -1,14 +1,21 @@
 var host = "http://localhost";
 var port = "8080";
 var path = host+":"+port+"/api/v1/";
+var currentMapId;
+var currentMapName;
+var map;
 					
 var axios = axios.create({
   baseURL: path,
   timeout: 5000
 });
 
-var map = L.map('mapid').setView([48.85, 2.35], 13);
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+function loadMap() {
+	map = L.map('mapid').setView([48.85, 2.35], 13);
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+}
+
+loadMap();
 	
 $("#mapPopup").on("shown.bs.modal", function () { 
     map.invalidateSize(true);
@@ -26,11 +33,18 @@ axios.get ("/maps")
 				bodyDiv.className = "card-body";
 				
 				var mapTitle = document.createElement("a");
-				mapTitle.href="#";
+				mapTitle.href="#mapPopup";
 				mapTitle.setAttribute("data-toggle", "modal");
-				mapTitle.setAttribute("data-target", "#mapPopup");
 				mapTitle.className = "card-title";
+				mapTitle.id = response.data[i].id;
 				mapTitle.innerHTML = response.data[i].name;
+				mapTitle.addEventListener("click",function (e) {
+					$("#maptitle").text(e.target.innerHTML);
+					currentPubMap = e.target.id;
+					map.remove();
+					loadMap();
+					getMap(currentPubMap);
+				});				
 				bodyDiv.appendChild(mapTitle);
 
 				var mapDescr = document.createElement("p");
@@ -64,9 +78,8 @@ axios.get ("/maps")
           console.log(err);
 	});
 
-
  
-function getMap (idMap) {	
+function getMap (idmap) {	
 	axios.get ("maps/"+idmap+"/places") //get places
 			.then(function (response) {		
 			
@@ -74,8 +87,9 @@ function getMap (idMap) {
 					console.log(response.data);					
 					for(var i = 0; i<response.data.length; i++){						
 						var newMarker = L.DomUtil.create('div');
+						newMarker.className = "centeredContainer";
+						
 						var n = L.DomUtil.create('div');
-						n.style.textAlign = "center";
 						var titlePop = L.DomUtil.create('label', '', n);
 						titlePop.innerHTML = "<b>"+ response.data[i].name +"</b>";
 						newMarker.appendChild(n);
@@ -83,6 +97,7 @@ function getMap (idMap) {
 						if (response.data[i].description!="") {
 							var m = L.DomUtil.create('div');
 							var msgPop = L.DomUtil.create('label', '', m);
+							m.style.textAlign = "left";						
 							msgPop.innerHTML = response.data[i].description +"<br />";
 							newMarker.appendChild(m);
 						}
@@ -91,14 +106,7 @@ function getMap (idMap) {
 						seePicsBtn.innerHTML = "Photos";
 						seePicsBtn.setAttribute("data-toggle", "modal");
 						seePicsBtn.setAttribute("data-target", "#photosModal");
-						
-						var delPlaceBtn = L.DomUtil.create('button',' btn btn-danger popupBtn',newMarker);
-						delPlaceBtn.innerHTML = "Delete";
-
-						delPlaceBtn.addEventListener("click",function (e) {
-                               deletePlace(e.target.nextSibling.innerHTML);
-                        });
-					
+											
 						var inputPlaceID = L.DomUtil.create('label','',newMarker);
 						inputPlaceID.innerHTML = response.data[i].id;
 						inputPlaceID.style.display = "none";						

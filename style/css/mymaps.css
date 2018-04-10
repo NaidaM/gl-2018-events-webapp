@@ -26,16 +26,6 @@ h3 {
 	height: 65vh;
 }
 
-.markContainer {
-	text-align: center;
-}
-
-.popupBtn {
-	margin : 3px;
-	padding: 2px 5px;
-	font-size: 1.2em;
-}
-
 .markContainer > button{
 	font-size: 13px;
 	margin-top:10px;

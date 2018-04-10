@@ -275,7 +275,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
         var container = L.DomUtil.create('div'),
             contMark = L.DomUtil.create('div'),
             markBtn = createButton('Mark place', contMark);
-        contMark.className = "markContainer";
+        contMark.className = "centeredContainer";
         container.appendChild(contMark);
 		
 		L.popup()

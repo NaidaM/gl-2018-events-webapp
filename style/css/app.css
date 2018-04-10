@@ -125,6 +125,16 @@ input:focus{
     text-align: center;
 }
 
+.centeredContainer {
+	text-align: center;
+}
+
+.popupBtn {
+	margin : 3px 6px;
+	padding: 2px 6px;
+	font-size: 1.2em;
+}
+
 .event-map{
     border: 1px solid rgba(0,0,0,.125) !important;
 }
