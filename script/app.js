@@ -23,17 +23,18 @@ document.querySelector("#logoutBtn").addEventListener("click",function () {
 
 $('#searchBtn').click(function(){
 	var searchTags = $("#searchTags").tagsinput('items');
-	if (searchTags!=null) {
+	if (searchTags.length >0) {
 		var tags = "";
 		for (var  i = 0;i<searchTags.length;i++) {
 			tags = tags+"tag="+searchTags[i]+"&";
 		}
 
 		axios2.get("maps/searchmap?"+tags) 
-			.then(function (response) {		
-				
+			.then(function (response) {						
 				if (response.status == 200) {
-					console.log(response.data);
+					localStorage.removeItem('search_results');
+					localStorage.setItem('search_results', JSON.stringify(response.data));
+					console.log("search results : ", response.data);
 				}
 			})
 			.catch(function (err) {

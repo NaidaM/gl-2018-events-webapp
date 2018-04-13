@@ -89,7 +89,11 @@ header .container-fluid{
 }
 
 #searchTagsDiv > .bootstrap-tagsinput {
-    min-width: 50vh !important;
+    min-width: 50vh !important; 
+}
+
+#searchTagsDiv > .bootstrap-tagsinput input {
+	margin-top: 6px;
 }
 
 body {
