@@ -88,6 +88,10 @@ header .container-fluid{
 	border-radius: 5px; 
 }
 
+#searchTagsDiv > .bootstrap-tagsinput {
+    min-width: 50vh !important;
+}
+
 body {
     background-color: transparent;
 }
