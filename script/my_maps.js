@@ -160,6 +160,20 @@ $('#visibilityBtns').change(function(){
 	}
 });
 
+$('#visibilityBtnsEdit').change(function(){
+    if($("#idFriendEdit").is(":checked")){
+		document.querySelector("#friendsListDivEdit").style.display = "inline";
+	}
+    else{
+		document.querySelector("#friendsListDivEdit").style.display = "none";
+	}
+});
+
+document.querySelector('#idNameMapEdit').defaultValue = JSON.parse(localStorage.getItem('current_map')).name;
+document.querySelector('#idDescMapEdit').defaultValue = JSON.parse(localStorage.getItem('current_map')).description;
+
+
+
 $('#delMapBtn').click(function(){
 	deleteMap(JSON.parse(localStorage.getItem('current_map')).id);
 });
