@@ -92,7 +92,11 @@ textarea {
     border-radius: .25em;
 }
 
+.input-tags {
+	text-align: left;
+}
 #friendsListDiv > .bootstrap-tagsinput {
+	text-align: left;
 	min-width: 80% !important;	
 }
 

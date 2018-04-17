@@ -124,6 +124,16 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 	}
 });
 
+$('#changeFriendsBtn').click(function(){
+	var friends = $("#shareList").tagsinput('items');
+	if (friends!=null) {
+		for (var i = 0;i<friends.length;i++) {
+			friendsList.push({"pseudo": friends[i]});
+		}
+	}
+	//(JSON.parse(localStorage.getItem('current_map')).id);
+});
+
 function clickMaps(e) {
 	e.preventDefault();
 	var idCurrMap = e.target.childNodes[1].firstChild.textContent;
