@@ -4,6 +4,9 @@ var path = host+":"+port+"/api/v1/"
 var maps;
 var mapsData;
 var currentMarker;
+var current_place;
+var formData = new FormData();
+var photoAdded = null;
 
 var formNewMap = document.querySelector("#form-newMap");
 
@@ -174,6 +177,12 @@ function clickMaps(e) {
 		});	
 }
 
+$('#photosModal').on("shown.bs.modal", function (evt) {
+    //get the element that opened the modal
+	console.log(evt.relatedTarget.nextSibling.nextSibling.innerHTML);
+	current_place = evt.relatedTarget.nextSibling.nextSibling.innerHTML;
+});
+
 //filling edit modal
 
 if (JSON.parse(localStorage.getItem('current_map')) !== null) { 
@@ -341,7 +350,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 						delPlaceBtn.innerHTML = "Delete";
 
 						delPlaceBtn.addEventListener("click",function (e) {
-                               deletePlace(e.target.nextSibling.innerHTML);
+                            deletePlace(e.target.nextSibling.innerHTML);
                         });
 					
 						var inputPlaceID = L.DomUtil.create('label','',newMarker);
@@ -375,6 +384,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
     function addImage(fileInput, container) {
         if (fileInput.files.length >0) {
             var file = fileInput.files[0];
+			photoAdded = file;
             var reader  = new FileReader();
             reader.onload = function(e)  {
                 var image = document.createElement("img");
@@ -385,6 +395,8 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
                 container.appendChild(image);
             }
             reader.readAsDataURL(file);
+			
+            formData.append('file', file);                        
         }
 
     }
@@ -399,9 +411,29 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
         })
     });
 	
-	$('#savePhotos').click(function(){
-        
-    });
+	
+document.querySelector('#formPhotos').addEventListener("submit", function(e){
+	e.preventDefault();
+
+	console.log(photoAdded);
+	if (photoAdded != null) {
+		$.ajax({
+			url : 'http://127.0.0.1:8080/api/v1/upload/image/' + current_place,
+			type : 'POST',
+			data : formData,
+			cache : false,
+			contentType : false,
+			processData : false,
+			success : function(data, textStatus, jqXHR) {
+				var message = jqXHR.responseText;
+				$("#messages").append("<li>" + message + "</li>");
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				$("#messages").append("<li style='color: red;'>" + textStatus + "</li>");
+			}
+		});
+	}
+});
 
     map.on('click', function(e) {
         var container = L.DomUtil.create('div'),
@@ -449,14 +481,6 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
             inputMsg.cols = "28";
             contMsg.appendChild(inputMsg);
             container.appendChild(contMsg);
-
-            var contPict = document.createElement("div");
-            label = document.createElement("label");
-            label.innerHTML = "Pictures";
-            contPict.appendChild(label);
-            var pic = document.createElement("input");
-            pic.type = "file";
-            contPict.appendChild(pic);
 
             var contValid = L.DomUtil.create('div'),
                 okBtn = createButton('Validate', contValid);
