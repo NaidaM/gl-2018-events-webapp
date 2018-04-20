@@ -177,7 +177,7 @@ function clickMaps(e) {
 		});	
 }
 
-$('#photosModal').on("shown.bs.modal", function (evt) {
+$('#addPhotosModal').on("shown.bs.modal", function (evt) {
     //get the element that opened the modal
 	console.log(evt.relatedTarget.nextSibling.nextSibling.innerHTML);
 	current_place = evt.relatedTarget.nextSibling.nextSibling.innerHTML;
@@ -340,6 +340,11 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 							msgPop.innerHTML = response.data[i].description +"<br />";
 							newMarker.appendChild(m);
 						}
+						
+						var addPicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
+						addPicsBtn.innerHTML = "Add photos";
+						addPicsBtn.setAttribute("data-toggle", "modal");
+						addPicsBtn.setAttribute("data-target", "#addPhotosModal");
 						
 						var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
 						seePicsBtn.innerHTML = "Photos";
@@ -507,6 +512,10 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
                         msgPop.innerHTML = inputMsg.value+"<br />";
                         newPopup.appendChild(m);
                     }
+					var addPicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newPopup);
+                    addPicsBtn.innerHTML = "Add photos";
+                    addPicsBtn.setAttribute("data-toggle", "modal");
+                    addPicsBtn.setAttribute("data-target", "#addPhotosModal");
 					
                     var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newPopup);
                     seePicsBtn.innerHTML = "Photos";

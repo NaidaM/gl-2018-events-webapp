@@ -92,7 +92,7 @@
   </div>
 </div>
 
-<div class="modal fade" role="dialog" id="photosModal">
+<div class="modal fade" role="dialog" id="addPhotosModal">
   <div class="modal-dialog" role="document" id="modalDialogPhotos">
     <div class="modal-content">
       <div class="modal-header">
@@ -107,6 +107,33 @@
 			<a href='#'> 
 				<img src="style/img/add-camera.png" id="addPhotoBtn">
 			</a>
+		  </div>		  
+		  
+		  <div class="modal-footer">
+			<button type="submit" class="btn btn-primary" id="savePhotos">Save changes</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+	  </form>
+	  
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" role="dialog" id="photosModal">
+  <div class="modal-dialog" role="document" id="modalDialogPhotos">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Photos manager</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	  
+	  <form enctype="multipart/form-data" id="formPhotos">
+		  <div class="modal-body" id="modalBodyViewPic">
+			
+			
 		  </div>		  
 		  
 		  <div class="modal-footer">
