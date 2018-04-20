@@ -365,32 +365,39 @@
                 </button>
             </div>
 
+
             <form id="updatePassword" action='#'>
                 <div class="modal-body" >
                     <div class="row justify-content-center">
                         <div class="col-sm-12">
                             <div class="alert alert-danger error" role="alert" style="display: none; height:35px; padding: 5px"></div>
-                            <input class="form-control" type="password" placeholder="Actual password" name="password" > </br>
+                            <input class="form-control" type="password"
+                                   placeholder="Actual password" name="password" id="actualPwd" > </br>
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-sm-12">
                             <input class="form-control" type="password"
-                                   placeholder="New password" name="password" > </br>
+                                   placeholder="New password" name="password"
+                                   id="newPwd" > </br>
                         </div>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-sm-12">
-                            <input class="form-control" type="password"
+                            <input class="form-control" type="password" id="confirmNewPwd"
                                    placeholder="Confirm new password" name="password" > </br>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">update</button>
+                    <button type="submit" class="btn btn-primary"
+                            id="updatePwdBtn">
+                        <img src = "style/img/loading.gif" id="load" style= "display:none; height: 30px; width: 30px; margin: 0 auto" />
+                        <span class="loadBtnText"> update </span></button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
+
 
             </form>
 

@@ -7,6 +7,7 @@ var axios2 = axios.create({
   timeout: 5000
 });
 
+
 var logout = function () {
 
     if (confirm("Are tou sure to logout ?")) {
@@ -47,6 +48,7 @@ $('#searchBtn').click(function(){
 
 var ano = document.querySelectorAll(".anonymous");
 var auth = document.querySelectorAll(".auth");
+var passwordUpdate = document.querySelector("#updatePassword");
 if(localStorage.getItem('access_token') != null){
 
     for (var i = 0;i<ano.length;i++){
@@ -69,4 +71,58 @@ if(localStorage.getItem('access_token') != null){
     }
 
 
+}
+
+
+if (updatePassword!=null) { updatePassword.addEventListener("submit", function(e) {
+    e.preventDefault();
+    var actualPwd = document.querySelector("#actualPwd").value;
+    var newPwd = document.querySelector("#newPwd").value;
+    var confirmNewPwd = document.querySelector("#confirmNewPwd").value;
+    var error = document.querySelector("#updatePassword .error");
+
+    error.style.display = "none";
+   // document.querySelector("#login-area").style.height = heightFormLogin+ "px";
+
+    if (actualPwd  === "" || confirmNewPwd  === "" || newPwd === "") {
+        error.innerHTML = "Tous les champs sont obligatoires!";
+        error.style.display = "block";
+    }
+    else if ( confirmNewPwd  !== newPwd ) {
+        error.innerHTML = "les nouveaux mot de passe doivent etre identique!";
+        error.style.display = "block";
+    }
+    else {
+        document.querySelector("#updatePwdBtn").disabled = true;
+        document.querySelector(".loadBtnText").style.display = "none";
+        document.querySelector("#load").style.display = "block";
+
+        var axiosPwd = axios.create({
+            baseURL: path,
+            timeout: 10000,
+            headers: {'Authorization': localStorage.getItem('access_token')}
+        });
+
+        axiosPwd.put(path+"auth/"+localStorage.getItem('pseudo')+"/password", {
+            actual_password: actualPwd,
+            new_password: newPwd,
+            confirm: confirmNewPwd
+        })
+            .then(function (response) {
+                if (response.status == 200) {
+                    alert("Update success");
+                    window.location.reload();
+                }
+                console.log(response);
+            })
+            .catch(function (err) {
+                document.querySelector("#updatePwdBtn").disabled = false;
+                document.querySelector(".loadBtnText").style.display = "block";
+                document.querySelector("#load").style.display = "none";
+                error.innerHTML =err.response.data.message[0];
+                error.style.display = "block";
+                //console.log(err.response.data.message[0]);
+            });
+    }
+});
 }
