@@ -17,6 +17,8 @@ var logout = function () {
 
 }
 
+var templateP = _.template($("#pseudo-message").html());
+
 document.querySelector("#logoutBtn").addEventListener("click",function () {
    logout();
 });
@@ -42,3 +44,29 @@ $('#searchBtn').click(function(){
 			});	
 	}
 });
+
+var ano = document.querySelectorAll(".anonymous");
+var auth = document.querySelectorAll(".auth");
+if(localStorage.getItem('access_token') != null){
+
+    for (var i = 0;i<ano.length;i++){
+        ano[i].style.display = "none";
+    }
+    for (var j = 0;j<auth.length;j++){
+        auth[j].style.display = "block";
+    }
+
+    var html = templateP({pseudo: localStorage.getItem('pseudo')});
+    $("#pseudo").append(html);
+    console.log(html);
+
+}else {
+    for (var i = 0;i<ano.length;i++){
+        ano[i].style.display = "block";
+    }
+    for (var j = 0;j<auth.length;j++){
+        auth[j].style.display = "none";
+    }
+
+
+}

@@ -12,7 +12,8 @@ if(localStorage.getItem('access_token') == null){
 }
 
 var template = _.template($("#tmpl-message").html());
-					
+
+
 var axios = axios.create({
   baseURL: path,
   timeout: 5000,
@@ -103,9 +104,7 @@ formNewMap.addEventListener("submit", function(e) {
 	if (nameMap == "") {
 		error.innerHTML = "Ce champ est obligatoire!";
 		error.style.display = "block";
-	}
-	
-	else {
+	}else {
 		axios.post ("users/"+localStorage.getItem('pseudo')+"/maps", {
 			name: nameMap,
 			description: descMap,
