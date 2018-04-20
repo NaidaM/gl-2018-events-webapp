@@ -19,6 +19,8 @@ var axios = axios.create({
   headers: {'Authorization': localStorage.getItem('access_token')}
 });
 
+//get maps 
+
 axios.get ("users/"+localStorage.getItem('pseudo')+"/maps") 
 		.then(function (response) {		
 			
@@ -70,8 +72,9 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 			}*/
 		});
 		
-		
-formNewMap.addEventListener("submit", function(e) {	//add a new map
+//add a new map
+
+formNewMap.addEventListener("submit", function(e) {	
 	e.preventDefault();
 	var nameMap = document.querySelector("#idNameMap").value;
 	var descMap = document.querySelector("#idDescMap").value;
@@ -134,23 +137,6 @@ $('#changeFriendsBtn').click(function(){
 	//(JSON.parse(localStorage.getItem('current_map')).id);
 });
 
-function clickMaps(e) {
-	e.preventDefault();
-	var idCurrMap = e.target.childNodes[1].firstChild.textContent;
-		
-	axios.get ("maps/"+idCurrMap) 
-		.then(function (response) {						
-			if (response.status == 200) {	
-                localStorage.removeItem('current_map');
-				localStorage.setItem('current_map', JSON.stringify(response.data));	
-                location.reload(true);
-			}			
-		})
-		.catch(function (err) {
-				console.log(err);
-		});	
-}
-
 $('#visibilityBtns').change(function(){
     if($("#idFriend").is(":checked")){
 		document.querySelector("#friendsListDiv").style.display = "inline";
@@ -168,6 +154,23 @@ $('#visibilityBtnsEdit').change(function(){
 		document.querySelector("#friendsListDivEdit").style.display = "none";
 	}
 });
+
+function clickMaps(e) {
+	e.preventDefault();
+	var idCurrMap = e.target.childNodes[1].firstChild.textContent;
+		
+	axios.get ("maps/"+idCurrMap) 
+		.then(function (response) {						
+			if (response.status == 200) {	
+                localStorage.removeItem('current_map');
+				localStorage.setItem('current_map', JSON.stringify(response.data));	
+                location.reload(true);
+			}			
+		})
+		.catch(function (err) {
+				console.log(err);
+		});	
+}
 
 //filling edit modal
 
@@ -206,6 +209,8 @@ if (JSON.parse(localStorage.getItem('current_map')) !== null) {
 		}
 	}
 }
+
+//edit a map 
 
 document.querySelector('#form-editMap').addEventListener("submit", function(e){
 	e.preventDefault();
@@ -284,6 +289,8 @@ function deleteMap(idmap) {
 			console.log(err);
     });
 }
+
+//delete a place
 
 function deletePlace(idplace) {
     axios.delete("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places/"+idplace)
