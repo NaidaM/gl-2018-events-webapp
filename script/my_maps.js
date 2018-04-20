@@ -34,10 +34,12 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 					document.querySelector("#containerMaps").style.visibility = "visible";
                     document.querySelector("#containerMaps").style.display = "block";
 					document.querySelector("#containerWelcome").style.display = "none";					
-					mapsData = response.data.maps;						
+					mapsData = response.data.maps;	
+					
 					if (JSON.parse(localStorage.getItem('current_map')) === null) {
 						localStorage.setItem('current_map', JSON.stringify(mapsData[0]));
 					}
+					
                     var html = template({maps: response.data.maps});
                     $("#mapsSlider").append(html);
                     $('.slidemaps').slick({
