@@ -79,14 +79,11 @@
 
 	<div id="mapsSlider" class="slidemaps slider slider-nav"></div>
 	
-	<button type="button" class="sharDelBtn" id="shareMap" data-toggle="modal" data-target="#editMapModal">
-		<i class="fas fa-pencil-alt"></i>
-	</button>
 	<div class = "column">
-		<button type="button" class="sharDelBtn" id="shareMap" data-toggle="modal" data-target="#shareModal">
-			<i class="fas fa-share-alt"></i>
+		<button type="button" class="editDelBtn" id="editMap" data-toggle="modal" data-target="#editMapModal">
+		<i class="fas fa-pencil-alt"></i>
 		</button>
-		<button type="button" class="sharDelBtn" id="deleteMap" data-toggle="modal" data-target="#deleteModal">
+		<button type="button" class="editDelBtn" id="deleteMap" data-toggle="modal" data-target="#deleteModal">
 			<i class="fas fa-trash-alt"></i>
 		</button>
 	</div>
@@ -109,7 +106,7 @@
 		</a>
 	  </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" id="savePhotos">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -159,30 +156,30 @@
 					</div>
 					
 					<div class="col-sm-10 btn-group btn-group-toggle" id="visibilityBtnsEdit" data-toggle="buttons">
-						<label class="btn btn-primary active">
-							<input type="radio" name="shareOption" id="idPrivEdit" autocomplete="off" checked> <i class="fas fa-lock"></i> Private
+						<label class="btn btn-primary" id="btnPrivEdit">
+							<input type="radio" name="shareOption" id="idPrivEdit" autocomplete="off"> <i class="fas fa-lock"></i> Private
 						</label>&#160;
-						<label class="btn btn-primary">
+						<label class="btn btn-primary" id="btnFriendEdit">
 							<input type="radio" name="shareOption" id="idFriendEdit" autocomplete="off"> <i class="fas fa-users"></i>&#160;Friends
 						</label>&#160;
-						<label class="btn btn-primary">
+						<label class="btn btn-primary" id="btnPublicEdit">
 							<input type="radio" name="shareOption" id="idPublicEdit" autocomplete="off"> <i class="fas fa-globe"></i> Public
 						</label>				
 					</div>
 					
 					<div class="col-md-10 input-tags" id="friendsListDivEdit" style="display:none;">
-						<br/><input type="text" data-role="tagsinput" placeholder="Friends" id="friendsListEdit">
+						<br/><input type="text" data-role="tagsinput" placeholder="friend..." id="friendsListEdit">
 					</div>	
 					
 					<div class="col-sm-10 input-tags">
-						<br/><input type="text" data-role="tagsinput" placeholder="Tags" id="tagsMapEdit">
+						<br/><input type="text" data-role="tagsinput" placeholder="tag..." id="tagsMapEdit">
 					</div>	
 				</div>		
 			</div>
 			
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary" id="editMapBtn">Create</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary" id="editMapBtn">Edit</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 			</div>
 	  
 		</form>
@@ -245,36 +242,6 @@
     </div>
   </div>
 </div>
-
-
-<div class="modal fade" role="dialog" id="shareModal">
-  <div class="modal-dialog modal-lg" role="document">
-  
-    <div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title">Share map with friends</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-			<div class="modal-body">
-				<div class="row justify-content-center">
-										
-					<div class="col-md-10 input-tags">
-						Share this map with <input type="text" data-role="tagsinput" placeholder="pseudo" id="shareList">
-					</div>	
-					
-				</div>		
-			</div>
-			
-			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary" id="changeFriendsBtn">OK</button>
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>	  
-    </div>
-  </div>
-</div>
-
 
 <script type="text/template" id="tmpl-message">
     <% _(maps).each(function(map) { %>

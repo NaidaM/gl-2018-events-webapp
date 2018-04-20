@@ -119,7 +119,7 @@ formNewMap.addEventListener("submit", function(e) {	//add a new map
 			}
 		})
 		.catch(function (err) {
-			
+			console.log(err);
 		});		
 	}
 });
@@ -162,17 +162,102 @@ $('#visibilityBtns').change(function(){
 
 $('#visibilityBtnsEdit').change(function(){
     if($("#idFriendEdit").is(":checked")){
-		document.querySelector("#friendsListDivEdit").style.display = "inline";
+		document.querySelector("#friendsListDivEdit").style.display = "inline";		
 	}
     else{
 		document.querySelector("#friendsListDivEdit").style.display = "none";
 	}
 });
 
-document.querySelector('#idNameMapEdit').defaultValue = JSON.parse(localStorage.getItem('current_map')).name;
-document.querySelector('#idDescMapEdit').defaultValue = JSON.parse(localStorage.getItem('current_map')).description;
+//filling edit modal
 
+if (JSON.parse(localStorage.getItem('current_map')) !== null) { 
+	document.querySelector('#idNameMapEdit').defaultValue = JSON.parse(localStorage.getItem('current_map')).name;
+	document.querySelector('#idDescMapEdit').defaultValue = JSON.parse(localStorage.getItem('current_map')).description;
+	
+	if (JSON.parse(localStorage.getItem('current_map')).isPrivate == "false") {	
+		document.querySelector('#idPublicEdit').checked = true;
+		document.querySelector('#btnPublicEdit').className += " active";
+	}
+	else if (JSON.parse(localStorage.getItem('current_map')).friends.length >0) {
+		document.querySelector('#idFriendEdit').checked = true;
+		document.querySelector('#btnFriendEdit').className += " active";
+		document.querySelector("#friendsListDivEdit").style.display = "inline";
 
+		var editFriends = JSON.parse(localStorage.getItem('current_map')).friends;
+		
+		$('#friendsListEdit').tagsinput('add', "");
+		for (var  i = 0;i<editFriends.length;i++) {		
+			$('#friendsListEdit').tagsinput('add', editFriends[i].pseudo);
+		}
+	}
+
+	else {
+		document.querySelector('#idPrivEdit').checked = true;
+		document.querySelector('#btnPrivEdit').className += " active";
+	}
+
+	if (JSON.parse(localStorage.getItem('current_map')).tags != []) {
+		var editTags = JSON.parse(localStorage.getItem('current_map')).tags;
+		
+		$('#tagsMapEdit').tagsinput('add', "");	
+		for (var  i = 0;i<editTags.length;i++) {		
+			$('#tagsMapEdit').tagsinput('add', editTags[i].name);
+		}
+	}
+}
+
+document.querySelector('#form-editMap').addEventListener("submit", function(e){
+	e.preventDefault();
+	var nameMapEd = document.querySelector("#idNameMapEdit").value;
+	var descMapEd = document.querySelector("#idDescMapEdit").value;
+	var friendsListEd = [];	
+	var tagsEd = $("#tagsMapEdit").tagsinput('items');
+	var tagsMapEd = [];
+	if (tagsEd!=null) {
+        for (var  i = 0;i<tagsEd.length;i++) {
+            tagsMapEd.push({"name": tagsEd[i] });
+        }
+    }
+
+	var sharedMapEd = !$("#idPublicEdit").is(":checked");
+	
+	if($("#idFriendEdit").is(":checked")){
+		var friends = $("#friendsListEdit").tagsinput('items');
+		if (friends!=null) {
+			for (var i = 0;i<friends.length;i++) {
+				friendsListEd.push({"pseudo": friends[i] });
+			}
+		}
+	}
+	
+	if (nameMapEd == "") {
+		alert("Name required");
+	}
+	
+	else {
+		axios.put ("users/"+localStorage.getItem('pseudo')+"/maps/"+ JSON.parse(localStorage.getItem('current_map')).id, {
+			name: nameMapEd,
+			description: descMapEd,
+			isPrivate: sharedMapEd,
+			tags: tagsMapEd,
+			friends: friendsListEd	
+		})
+		.then(function (response) {		
+			if (response.status == 200) {
+                localStorage.removeItem('current_map');
+				localStorage.setItem('current_map', JSON.stringify(response.data));
+				console.log(response.data);			
+				location.reload(true);
+			}
+		})
+		.catch(function (err) {
+			alert(err);
+		});		
+	}
+});
+
+//delete a map
 
 $('#delMapBtn').click(function(){
 	deleteMap(JSON.parse(localStorage.getItem('current_map')).id);
@@ -295,6 +380,20 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
     }
 
+	$('#addPhotoBtn').click(function(){
+        var fileInput = document.createElement("input");
+        fileInput.type = "file";
+
+        $(fileInput).trigger('click');
+        $(fileInput).change(function(){
+            addImage(fileInput, document.querySelector("#modalBodyPic"));
+        })
+    });
+	
+	$('#savePhotos').click(function(){
+        
+    });
+
     map.on('click', function(e) {
         var container = L.DomUtil.create('div'),
             contMark = L.DomUtil.create('div'),
@@ -349,16 +448,6 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
             var pic = document.createElement("input");
             pic.type = "file";
             contPict.appendChild(pic);
-
-            $('#addPhotoBtn').click(function(){
-                var fileInput = document.createElement("input");
-                fileInput.type = "file";
-
-                $(fileInput).trigger('click');
-                $(fileInput).change(function(){
-                    addImage(fileInput, document.querySelector("#modalBodyPic"));
-                })
-            });
 
             var contValid = L.DomUtil.create('div'),
                 okBtn = createButton('Validate', contValid);
