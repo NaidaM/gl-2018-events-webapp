@@ -116,18 +116,6 @@ textarea {
 	 border-radius:6px
 }
 
-#modalDialogPhotos {
-    display: table;
-    max-width: 150vh;
-}
-
-.modal-body {
-	max-height: 60vh;
-	text-align: center;
-	overflow-y: scroll
-}
-
-
 #arrow-left, #arrow-right {
 	border: none;
 	outline: none;

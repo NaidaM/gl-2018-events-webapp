@@ -133,6 +133,17 @@ input:focus{
     text-align: center;
 }
 
+#modalDialogPhotos {
+    display: table;
+    max-width: 150vh;
+}
+
+#modalBodyViewPic, #modalBodyPic {
+	max-height: 60vh;
+	text-align: center;
+	overflow-y: scroll
+}
+
 .centeredContainer {
 	text-align: center;
 }
