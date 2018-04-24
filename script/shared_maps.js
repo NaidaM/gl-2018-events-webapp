@@ -107,6 +107,7 @@ function getMap (idmap) {
 											
 						var inputPlaceID = L.DomUtil.create('label','',newMarker);
 						inputPlaceID.innerHTML = response.data[i].id;
+						console.log(inputPlaceID.innerHTML);
 						inputPlaceID.style.display = "none";						
 
 						var newPopup = L.popup()

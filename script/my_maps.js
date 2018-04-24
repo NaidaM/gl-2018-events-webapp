@@ -179,8 +179,8 @@ function clickMaps(e) {
 
 $('#addPhotosModal').on("shown.bs.modal", function (evt) {
     //get the element that opened the modal
-	console.log(evt.relatedTarget.nextSibling.nextSibling.innerHTML);
-	current_place = evt.relatedTarget.nextSibling.nextSibling.innerHTML;
+	console.log(evt.relatedTarget.nextSibling.nextSibling.nextSibling.innerHTML);
+	current_place = evt.relatedTarget.nextSibling.nextSibling.nextSibling.innerHTML;
 });
 
 
@@ -191,39 +191,6 @@ $('#addPhotosModal').on("hidden.bs.modal", function (evt) {
 		divPic.removeChild(divPic.lastChild);
 	};
 });
-
-$('#photosModal').on("shown.bs.modal", function (evt) {					
-	console.log(evt.relatedTarget.nextSibling.nextSibling.nextSibling.innerHTML);
-	current_place = evt.relatedTarget.nextSibling.nextSibling.nextSibling.innerHTML;
-	axios.get("maps/"+current_place+"/photo") 
-		.then(function (response) {						
-			if (response.status == 200) {	
-                console.log(response.data);
-				var photoNames = response.data;
-				for (var i = 0 ;i<photoNames.length;i++) {
-					var image = document.createElement("img");
-					image.src = "http://127.0.0.1:8080/api/v1/upload/download/"+photoNames[i];
-					image.style.maxWidth = '300px'
-					image.style.maxHeight = '300px'
-
-					document.querySelector('#modalBodyViewPic').appendChild(image);	
-				}
-			}			
-		})
-		.catch(function (err) {
-				console.log(err);
-		});	
-});
-
-$('#photosModal').on("hidden.bs.modal", function (evt) {
-    //empty the div
-	var divView = document.querySelector('#modalBodyViewPic');
-	while (divView.hasChildNodes()) {
-		divView.removeChild(divView.lastChild);
-	}
-});
-
-
 
 //filling edit modal
 
@@ -383,15 +350,15 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 							newMarker.appendChild(m);
 						}
 						
-						var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
-						seePicsBtn.innerHTML = "Photos";
-						seePicsBtn.setAttribute("data-toggle", "modal");
-						seePicsBtn.setAttribute("data-target", "#photosModal");
-						
 						var addPicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
 						addPicsBtn.innerHTML = "Add photos";
 						addPicsBtn.setAttribute("data-toggle", "modal");
 						addPicsBtn.setAttribute("data-target", "#addPhotosModal");
+						
+						var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
+						seePicsBtn.innerHTML = "Photos";
+						seePicsBtn.setAttribute("data-toggle", "modal");
+						seePicsBtn.setAttribute("data-target", "#photosModal");
 						
 						var delPlaceBtn = L.DomUtil.create('button',' btn btn-danger popupBtn',newMarker);
 						delPlaceBtn.innerHTML = "Delete";
@@ -555,16 +522,16 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
                         var msgPop = L.DomUtil.create('label', '', m);
                         msgPop.innerHTML = inputMsg.value+"<br />";
                         newPopup.appendChild(m);
-                    }
-                    var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newPopup);
-                    seePicsBtn.innerHTML = "Photos";
-                    seePicsBtn.setAttribute("data-toggle", "modal");
-                    seePicsBtn.setAttribute("data-target", "#photosModal");
-										
+                    }					
 					var addPicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newPopup);
                     addPicsBtn.innerHTML = "Add photos";
                     addPicsBtn.setAttribute("data-toggle", "modal");
                     addPicsBtn.setAttribute("data-target", "#addPhotosModal");
+					
+                    var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newPopup);
+                    seePicsBtn.innerHTML = "Photos";
+                    seePicsBtn.setAttribute("data-toggle", "modal");
+                    seePicsBtn.setAttribute("data-target", "#photosModal");
 					
 					var delPlaceBtn = L.DomUtil.create('button','btn btn-danger popupBtn',newPopup);
                     delPlaceBtn.innerHTML = "Delete";
