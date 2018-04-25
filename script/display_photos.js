@@ -4,7 +4,8 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 	//console.log(evt.relatedTarget.nextSibling.nextSibling.nextSibling.innerHTML);
 	if (evt.relatedTarget.nextSibling.tagName == "LABEL") crt_place = evt.relatedTarget.nextSibling.innerHTML;
 	else crt_place = evt.relatedTarget.nextSibling.nextSibling.innerHTML;
-	axios.get("maps/place/"+crt_place+"/pictures") 
+
+	axios.get("maps/place/"+crt_place+"/pictures")
 		.then(function (response) {						
 			if (response.status == 200) {	
                 console.log(response.data);
