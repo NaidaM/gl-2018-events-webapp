@@ -187,11 +187,11 @@ $('#addPhotosModal').on("shown.bs.modal", function (evt) {
 $('#addPhotosModal').on("hidden.bs.modal", function (evt) {
     //empty div
 	var divPic = document.querySelector('#modalBodyPic');
-	while (divPic.hasChildNodes()) {
+	while (divPic.childNodes.length>2) {
+		console.log(divPic.childNodes);
 		divPic.removeChild(divPic.lastChild);
 	};
 });
-
 //filling edit modal
 
 if (JSON.parse(localStorage.getItem('current_map')) !== null) { 
@@ -432,7 +432,7 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
 	console.log(photoAdded);
 	if (photoAdded != null) {
 		$.ajax({
-			url : 'http://127.0.0.1:8080/api/v1/upload/image/' + current_place,
+			url : 'http://127.0.0.1:8080/api/v1/image/upload/' + current_place,
 			type : 'POST',
 			data : formData,
 			cache : false,
