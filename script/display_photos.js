@@ -15,6 +15,8 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 					image.style.maxWidth = '300px'
 					image.style.maxHeight = '300px'
 					image.className = "userImg";
+					image.style.zIndex = "10";	
+					image.style.position = "relative";
 					
 					image.addEventListener("click",function (e) {
 						if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1)== "my_maps.html") {
@@ -23,6 +25,7 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 							for (var i = 0; i < viewDiv.childNodes.length; i++) {
 								if (viewDiv.childNodes[i].src == e.target.src) {
 									viewDiv.removeChild(viewDiv.childNodes[i]);
+									//viewDiv.removeChild(viewDiv.childNodes[i]);									
 								}
 							}
 						
@@ -42,8 +45,28 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 					});		
 
 					document.querySelector('#modalBodyViewPic').appendChild(image);	
-					
+					/*if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1)== "my_maps.html") {										
+						var delLabel = document.createElement("img");
+						delLabel.style.left = "-"+ image.naturalWidth +"px";		
+						delLabel.style.position = "relative";
+						delLabel.style.zIndex = "5";
+						delLabel.src ="https://d30y9cdsu7xlg0.cloudfront.net/png/620343-200.png";
+						delLabel.style.width = "50px";
+						delLabel.className = "delImgLabel";
+						document.querySelector('#modalBodyViewPic').appendChild(delLabel);		
+					}
+				
+					image.onload = function () {
+						var viewDiv = document.querySelector('#modalBodyViewPic');				
+						for (var i = 2; i < viewDiv.childNodes.length; i+=2) {
+							var margin = viewDiv.childNodes[i-1].width/1.5 - 15;
+							
+							viewDiv.childNodes[i].style.left = "-"+ margin +"px";		
+							console.log(viewDiv.childNodes);						
+						}
+					}*/
 				}
+				
 			}			
 		})
 		.catch(function (err) {
