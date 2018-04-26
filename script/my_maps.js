@@ -188,7 +188,6 @@ $('#addPhotosModal').on("hidden.bs.modal", function (evt) {
     //empty div
 	var divPic = document.querySelector('#modalBodyPic');
 	while (divPic.childNodes.length>2) {
-		console.log(divPic.childNodes);
 		divPic.removeChild(divPic.lastChild);
 	};
 });
@@ -229,7 +228,23 @@ if (JSON.parse(localStorage.getItem('current_map')) !== null) {
 		}
 	}
 }
+//filling edit place modal
 
+/*
+$('#editPlaceModal').on("shown.bs.modal", function (evt) {		
+	if (JSON.parse(localStorage.getItem('current_map')) !== null) { 
+		var places = JSON.parse(localStorage.getItem('current_map')).places;
+		var place = null;
+		for (var i=0; i<places.length; i++) {
+			if (places[i].id == current_place) place = places[i];
+		}
+		
+		if (place != null) {
+			document.querySelector('#idNamePlaceEdit').defaultValue = place.name;
+			document.querySelector('#idDescPlaceEdit').defaultValue = place.description;
+		}
+	}
+});*/
 //edit a map 
 
 document.querySelector('#form-editMap').addEventListener("submit", function(e){
@@ -273,6 +288,34 @@ document.querySelector('#form-editMap').addEventListener("submit", function(e){
                 localStorage.removeItem('current_map');
 				localStorage.setItem('current_map', JSON.stringify(response.data));
 				console.log(response.data);			
+				location.reload(true);
+			}
+		})
+		.catch(function (err) {
+			alert(err);
+		});		
+	}
+});
+
+//edit a place
+
+document.querySelector('#form-editPlace').addEventListener("submit", function(e){
+	e.preventDefault();
+	var namePlaceEd = document.querySelector("#idNamePlaceEdit").value;
+	var descPlaceEd = document.querySelector("#idDescPlaceEdit").value;
+	
+	if (namePlaceEd == "") {
+		alert("Name required");
+	}
+	
+	else {
+		axios.put ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places/"+current_place, { 
+			name: namePlaceEd,
+			description: descPlaceEd
+		})
+		.then(function (response) {		
+			if (response.status == 200) {
+                console.log(response.data);			
 				location.reload(true);
 			}
 		})
@@ -351,12 +394,12 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 						}
 						
 						var addPicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
-						addPicsBtn.innerHTML = "Add photos";
+						addPicsBtn.innerHTML = "Add pics";
 						addPicsBtn.setAttribute("data-toggle", "modal");
 						addPicsBtn.setAttribute("data-target", "#addPhotosModal");
 						
 						var seePicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
-						seePicsBtn.innerHTML = "Photos";
+						seePicsBtn.innerHTML = "Pics";
 						seePicsBtn.setAttribute("data-toggle", "modal");
 						seePicsBtn.setAttribute("data-target", "#photosModal");
 						
@@ -371,6 +414,14 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 						inputPlaceID.innerHTML = response.data[i].id;
 						inputPlaceID.style.display = "none";						
 
+						var editPlaceBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
+						editPlaceBtn.innerHTML = "Edit";//'<i class="fas fa-pencil-alt"></i>';
+						editPlaceBtn.addEventListener("click",function (e) {								
+							current_place = (e.target.previousSibling.innerHTML);
+                        });
+						editPlaceBtn.setAttribute("data-toggle", "modal");
+						editPlaceBtn.setAttribute("data-target", "#editPlaceModal");
+						
 						var newPopup = L.popup()
 							.setContent(newMarker)
 							.setLatLng(L.latLng(response.data[i].latitude,response.data[i].longitude));
@@ -522,7 +573,8 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
                         var msgPop = L.DomUtil.create('label', '', m);
                         msgPop.innerHTML = inputMsg.value+"<br />";
                         newPopup.appendChild(m);
-                    }					
+                    }	
+										
 					var addPicsBtn = L.DomUtil.create('button','btn btn-primary popupBtn',newPopup);
                     addPicsBtn.innerHTML = "Add photos";
                     addPicsBtn.setAttribute("data-toggle", "modal");
@@ -540,7 +592,15 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
 						deletePlace(e.target.nextSibling.innerHTML);
 					});
 					
-					var inputPlaceID2 = L.DomUtil.create('label','',newPopup);					
+					var inputPlaceID2 = L.DomUtil.create('label','',newPopup);
+					
+					var editPlaceBtn = L.DomUtil.create('button','btn btn-primary edPlaceBtn popupBtn',newPopup);
+					editPlaceBtn.innerHTML = '<i class="fas fa-pencil-alt"></i>';
+					editPlaceBtn.addEventListener("click",function (e) {
+						current_place = (e.target.previousSibling.innerHTML);
+                    });
+                    editPlaceBtn.setAttribute("data-toggle", "modal");
+                    editPlaceBtn.setAttribute("data-target", "#editPlaceModal");				
 
                     var p = L.popup()
                         .setContent(newPopup)
