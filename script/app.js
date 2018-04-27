@@ -26,6 +26,7 @@ document.querySelector("#logoutBtn").addEventListener("click",function () {
 });
 
 $('#searchBtn').click(function(){
+	localStorage.removeItem('search_results');
 	var searchTags = $("#searchTags").tagsinput('items');
 	if (searchTags.length >0) {
 		var tags = "";
@@ -36,7 +37,6 @@ $('#searchBtn').click(function(){
 		axios2.get("maps/searchmap?"+tags) 
 			.then(function (response) {						
 				if (response.status == 200) {
-					localStorage.removeItem('search_results');
 					localStorage.setItem('search_results', JSON.stringify(response.data));
 					console.log("search results : ", response.data);
 				}
@@ -45,6 +45,8 @@ $('#searchBtn').click(function(){
 				  console.log(err);
 			});	
 	}
+    document.location.href = "results.html";
+	
 });
 
 var ano = document.querySelectorAll(".anonymous");
