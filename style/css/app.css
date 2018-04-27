@@ -106,10 +106,6 @@ body {
 .navbar {
 	padding: 2px 0 2px 0 ;
 }
-.separator {
-    border: 1px solid  #003333;
-}
-
 input:focus{
     box-shadow: 0 0 3px  #003333 !important;
 }
@@ -167,6 +163,7 @@ input:focus{
     font-weight: bolder;
     padding: 5px;
     background-color: #10707f;
+	margin: 1px;
 }
 
 .details-link{
