@@ -199,12 +199,12 @@ textarea {
 }
 
 .userImg:hover {
-	opacity:0.5;
+	opacity:0.7;
 }
 
 .div-photo{
 	position: relative;
-	margin: 2em;
+	margin: 0.5em;
 }
 
 .div-photo img{
@@ -214,10 +214,23 @@ textarea {
 .div-photo button{
 	position: absolute;
 	text-align: center;
-	top: -1em;
-	color: #000;
-	left: 15em;
+	bottom: 0em;
+	left: 14em;
 	z-index: 10;
 }
 
 
+.place_name{
+	font-size: 22px;
+
+	color: #10707f;
+}
+
+.place-description{
+	font-size: 20px;
+	color: #000000;
+}
+
+#modalBodyViewPic{
+	text-align: left;
+}

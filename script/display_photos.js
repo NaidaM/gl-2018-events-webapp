@@ -15,9 +15,15 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 					div.style.display= "inline";
 					var image = document.createElement("img");
 					var btnDel = document.createElement("button");
+					var iconDel = document.createElement("i");
+					iconDel.className = "fa fa-trash-alt";
+                	btnDel.appendChild(iconDel);
 					btnDel.className = "btn btn-danger";
-					btnDel.textContent = "del";
+				//	btnDel.textContent = "delete";
 					image.src = "http://127.0.0.1:8080/api/v1/image/download/"+photoNames[i];
+
+					div.style.width = image.width+"px";
+					div.style.height = image.height+"px";
 					image.style.maxWidth = '300px';
 					image.style.maxHeight = '300px';
 					image.className = "userImg";
@@ -28,23 +34,25 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 					div.appendChild(btnDel);
                     btnDel.addEventListener("click",function (e) {
 						if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1)=== "my_maps.html") {
-							
-							var viewDiv = document.querySelector('#modalBodyViewPic');
-							var img = this.previousSibling;
-							var divToremove = this.parentNode;
-							var name = img.src.substring(img.src.lastIndexOf("/") + 1);
+
+                            var viewDiv = document.querySelector('#modalBodyViewPic');
+                            var img = this.previousSibling;
+                            var divToremove = this.parentNode;
+                            var name = img.src.substring(img.src.lastIndexOf("/") + 1);
                             //console.log(name);
                             //viewDiv.removeChild(this.parentNode);
-							axios.delete("image/delete/"+name)
-								.then(function (res) {
-									if(res.status === 200){
-											viewDiv.removeChild(divToremove);
-									}	
-								})
-								.catch(function (err){
-									console.log(err);
-								});
-						}
+                            if (confirm("are you sure to delete")) {
+                                axios.delete("image/delete/" + name)
+                                    .then(function (res) {
+                                        if (res.status === 200) {
+                                            viewDiv.removeChild(divToremove);
+                                        }
+                                    })
+                                    .catch(function (err) {
+                                        console.log(err);
+                                    });
+                            }
+                        }
 					});		
 
 					document.querySelector('#modalBodyViewPic').appendChild(div);

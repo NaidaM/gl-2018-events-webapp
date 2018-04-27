@@ -355,17 +355,20 @@ function deleteMap(idmap) {
 //delete a place
 
 function deletePlace(idplace) {
-    axios.delete("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places/"+idplace)
 
-		.then(function (response) {
-            if (response.status == 200) {
-            	map.closePopup();
-				map.removeLayer(currentMarker);
-			}
-        })
-		.catch(function (err) {
-			console.log(err);
-    });
+    if (confirm("Are tou sure to delete this plcae ?")) {
+        axios.delete("maps/" + JSON.parse(localStorage.getItem('current_map')).id + "/places/" + idplace)
+
+            .then(function (response) {
+                if (response.status == 200) {
+                    map.closePopup();
+                    map.removeLayer(currentMarker);
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
 }
 
 var map = L.map('mapid').setView([48.85, 2.35], 13);
@@ -434,7 +437,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
                         var coords = L.DomUtil.create('span', 'coords', newMarker);
                         coords.innerHTML =  response.data[i].latitude +","+ response.data[i].longitude ;
 
-
+                        coords.style.display = "none";
 						var newPopup = L.popup()
 							.setContent(newMarker)
 							.setLatLng(L.latLng(response.data[i].latitude,response.data[i].longitude));
@@ -615,13 +618,27 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
 						current_place = (e.target.previousSibling.innerHTML);
                     });
                     editPlaceBtn.setAttribute("data-toggle", "modal");
-                    editPlaceBtn.setAttribute("data-target", "#editPlaceModal");				
+                    editPlaceBtn.setAttribute("data-target", "#editPlaceModal");
+
+
+                    var itineraire = L.DomUtil.create('button','btn btn-primary popupBtn',newPopup);
+                    itineraire.innerHTML = "Find Itinerary";//'<i class="fas fa-pencil-alt"></i>';
+                    itineraire.addEventListener("click",function (e) {
+                        var coordPlace =( e.target.nextSibling.innerHTML).split(",");
+                        console.log(coordPlace[0]);
+                        console.log(coordPlace[1]);
+
+                    });
+                    var coords = L.DomUtil.create('span', 'coords', newPopup);
+                    coords.innerHTML =  e.latlng.lat +","+ e.latlng.lng ;
+
+                    coords.style.display = "none";
+
 
                     var p = L.popup()
                         .setContent(newPopup)
                         .setLatLng(e.latlng);
-						
-					console.log(inputName.value, inputMsg.value,e.latlng.lat,e.latlng.lng);
+
 											
 					axios.post ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places", {
 						name: inputName.value,
