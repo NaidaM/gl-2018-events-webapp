@@ -67,7 +67,6 @@ axios.get ("users/"+localStorage.getItem('pseudo')+"/maps")
 
                     }
 				}
-				console.log(response.data);		
 			}			
 		})
 		.catch(function (err) {
@@ -377,7 +376,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 			.then(function (response) {		
 			
 				if (response.status == 200) {
-					console.log(response.data);					
+
 					for(var i = 0; i<response.data.length; i++){						
 						var newMarker = L.DomUtil.create('div');
 						var n = L.DomUtil.create('div');
@@ -493,7 +492,6 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
 document.querySelector('#formPhotos').addEventListener("submit", function(e){
 	e.preventDefault();
-	console.log(photoAdded);
 
 	if (photoAdded != null) {
         //console.log("form length");

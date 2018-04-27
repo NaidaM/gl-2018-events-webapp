@@ -31,26 +31,19 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 							
 							var viewDiv = document.querySelector('#modalBodyViewPic');
 							var img = this.previousSibling;
-							console.log(this.parent);
+							var divToremove = this.parentNode;
 							var name = img.src.substring(img.src.lastIndexOf("/") + 1);
-							
-							axios.delete("image/delete/"+name) 
-								.then(function (response) {	
-									if(response.status === 200){
-
-											viewDiv.removeChild(div);
-
-                                        /*for (var i = 0; i < viewDiv.childNodes.length; i++) {
-                                            viewDiv.removeChild(div);
-
-                                            if (viewDiv.childNodes[i].src == img.src)
-                                                viewDiv.removeChild(viewDiv.childNodes[i]);
-                                        }*/
+                            //console.log(name);
+                            //viewDiv.removeChild(this.parentNode);
+							axios.delete("image/delete/"+name)
+								.then(function (res) {
+									if(res.status === 200){
+											viewDiv.removeChild(divToremove);
 									}	
 								})
 								.catch(function (err){
 									console.log(err);
-								});												
+								});
 						}
 					});		
 

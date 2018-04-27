@@ -63,7 +63,6 @@ if(localStorage.getItem('access_token') != null){
 
     var html = templateP({pseudo: localStorage.getItem('pseudo')});
     $("#pseudo").append(html);
-    console.log(html);
 
 }else {
     for (var i = 0;i<ano.length;i++){
