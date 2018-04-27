@@ -6,31 +6,45 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 
 	axios.get("maps/place/"+crt_place+"/pictures")
 		.then(function (response) {						
-			if (response.status == 200) {	
-                console.log(response.data);
+			if (response.status === 200) {
+
 				var photoNames = response.data;
 				for (var i = 0 ;i<photoNames.length;i++) {
+					var div = document.createElement("div");
+					div.className = "div-photo";
+					div.style.display= "inline";
 					var image = document.createElement("img");
+					var btnDel = document.createElement("button");
+					btnDel.className = "btn btn-danger";
+					btnDel.textContent = "del";
 					image.src = "http://127.0.0.1:8080/api/v1/image/download/"+photoNames[i];
 					image.style.maxWidth = '300px'
 					image.style.maxHeight = '300px'
 					image.className = "userImg";
 					image.style.zIndex = "10";	
 					image.style.position = "relative";
-					
-					image.addEventListener("click",function (e) {
-						if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1)== "my_maps.html") {
+
+					div.appendChild(image);
+					div.appendChild(btnDel);
+                    btnDel.addEventListener("click",function (e) {
+						if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1)=== "my_maps.html") {
 							
 							var viewDiv = document.querySelector('#modalBodyViewPic');
-							var name = e.target.src.substring(e.target.src.lastIndexOf("/") + 1);
+							var img = btnDel.previousSibling;
+							var name = img.src.substring(img.src.lastIndexOf("/") + 1);
 							
 							axios.delete("image/delete/"+name) 
 								.then(function (response) {	
-									if(response.status == 200){
-										for (var i = 0; i < viewDiv.childNodes.length; i++) {
-											if (viewDiv.childNodes[i].src == e.target.src) 
-												viewDiv.removeChild(viewDiv.childNodes[i]);
-										}
+									if(response.status === 200){
+
+											viewDiv.removeChild(div);
+
+                                        /*for (var i = 0; i < viewDiv.childNodes.length; i++) {
+                                            viewDiv.removeChild(div);
+
+                                            if (viewDiv.childNodes[i].src == img.src)
+                                                viewDiv.removeChild(viewDiv.childNodes[i]);
+                                        }*/
 									}	
 								})
 								.catch(function (err){
@@ -39,7 +53,7 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 						}
 					});		
 
-					document.querySelector('#modalBodyViewPic').appendChild(image);	
+					document.querySelector('#modalBodyViewPic').appendChild(div);
 					/*if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1)== "my_maps.html") {										
 						var delLabel = document.createElement("img");
 						delLabel.style.left = "-"+ image.naturalWidth +"px";		
