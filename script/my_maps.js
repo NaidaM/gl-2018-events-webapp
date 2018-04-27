@@ -382,13 +382,14 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 						var newMarker = L.DomUtil.create('div');
 						var n = L.DomUtil.create('div');
 						n.style.textAlign = "center";
-						var titlePop = L.DomUtil.create('label', '', n);
+						var titlePop = L.DomUtil.create('label', 'place_name', n);
+
 						titlePop.innerHTML = "<b>"+ response.data[i].name +"</b>";
-						newMarker.appendChild(n);
-						
+                        newMarker.appendChild(n);
+
 						if (response.data[i].description!="") {
 							var m = L.DomUtil.create('div');
-							var msgPop = L.DomUtil.create('label', '', m);
+							var msgPop = L.DomUtil.create('label', 'place-description', m);
 							msgPop.innerHTML = response.data[i].description +"<br />";
 							newMarker.appendChild(m);
 						}
@@ -419,9 +420,22 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 						editPlaceBtn.addEventListener("click",function (e) {								
 							current_place = (e.target.previousSibling.innerHTML);
                         });
+
 						editPlaceBtn.setAttribute("data-toggle", "modal");
 						editPlaceBtn.setAttribute("data-target", "#editPlaceModal");
-						
+
+                        var itineraire = L.DomUtil.create('button','btn btn-primary popupBtn',newMarker);
+                        itineraire.innerHTML = "Find Itinerary";//'<i class="fas fa-pencil-alt"></i>';
+                        itineraire.addEventListener("click",function (e) {
+                            var coordPlace =( e.target.nextSibling.innerHTML).split(",");
+                            console.log(coordPlace[0]);
+                            console.log(coordPlace[1]);
+
+                        });
+                        var coords = L.DomUtil.create('span', 'coords', newMarker);
+                        coords.innerHTML =  response.data[i].latitude +","+ response.data[i].longitude ;
+
+
 						var newPopup = L.popup()
 							.setContent(newMarker)
 							.setLatLng(L.latLng(response.data[i].latitude,response.data[i].longitude));
