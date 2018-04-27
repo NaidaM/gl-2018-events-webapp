@@ -1,4 +1,3 @@
-
 $('#photosModal').on("shown.bs.modal", function (evt) {					
 	var crt_place;
 	//console.log(evt.relatedTarget.nextSibling.nextSibling.nextSibling.innerHTML);
@@ -21,15 +20,10 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 					
 					image.addEventListener("click",function (e) {
 						if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1)== "my_maps.html") {
+							
 							var viewDiv = document.querySelector('#modalBodyViewPic');
 							var name = e.target.src.substring(e.target.src.lastIndexOf("/") + 1);
-							for (var i = 0; i < viewDiv.childNodes.length; i++) {
-								if (viewDiv.childNodes[i].src == e.target.src) {
-									viewDiv.removeChild(viewDiv.childNodes[i]);
-									//viewDiv.removeChild(viewDiv.childNodes[i]);									
-								}
-							}
-						
+							
 							axios.delete("image/delete/"+name) 
 								.then(function (response) {	
 									if(response.status == 200){
