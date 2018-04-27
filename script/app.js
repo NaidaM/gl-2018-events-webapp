@@ -13,6 +13,7 @@ var logout = function () {
     if (confirm("Are tou sure to logout ?")) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("pseudo");
+        localStorage.removeItem("current_map");
         document.location.href = "index.html";
     }
 
