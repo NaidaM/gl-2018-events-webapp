@@ -489,13 +489,14 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
             addImage(fileInput, document.querySelector("#modalBodyPic"));
         })
     });
-	
-	
+
+
 document.querySelector('#formPhotos').addEventListener("submit", function(e){
 	e.preventDefault();
-
 	console.log(photoAdded);
+
 	if (photoAdded != null) {
+        //console.log("form length");
 		$.ajax({
 			url : 'http://127.0.0.1:8080/api/v1/image/upload/' + current_place,
 			type : 'POST',
@@ -506,9 +507,11 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
 			success : function(data, textStatus, jqXHR) {
 				var message = jqXHR.responseText;
 				$("#messages").append("<li>" + message + "</li>");
+				formData = new  FormData();
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				$("#messages").append("<li style='color: red;'>" + textStatus + "</li>");
+                formData = new  FormData();
 			}
 		});
 	}
@@ -674,5 +677,6 @@ function createPlace() {
     var btn = L.DomUtil.create('button', 'addedbtn', container);
     btn.setAttribute('type', 'button');
     btn.innerHTML = label;
+    formData.delete("file");
 }
 

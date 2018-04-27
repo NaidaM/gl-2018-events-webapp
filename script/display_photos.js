@@ -1,7 +1,7 @@
 $('#photosModal').on("shown.bs.modal", function (evt) {					
 	var crt_place;
 	//console.log(evt.relatedTarget.nextSibling.nextSibling.nextSibling.innerHTML);
-	if (evt.relatedTarget.nextSibling.tagName == "LABEL") crt_place = evt.relatedTarget.nextSibling.innerHTML;
+	if (evt.relatedTarget.nextSibling.tagName === "LABEL") crt_place = evt.relatedTarget.nextSibling.innerHTML;
 	else crt_place = evt.relatedTarget.nextSibling.nextSibling.innerHTML;
 
 	axios.get("maps/place/"+crt_place+"/pictures")
@@ -18,8 +18,8 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 					btnDel.className = "btn btn-danger";
 					btnDel.textContent = "del";
 					image.src = "http://127.0.0.1:8080/api/v1/image/download/"+photoNames[i];
-					image.style.maxWidth = '300px'
-					image.style.maxHeight = '300px'
+					image.style.maxWidth = '300px';
+					image.style.maxHeight = '300px';
 					image.className = "userImg";
 					image.style.zIndex = "10";	
 					image.style.position = "relative";
@@ -30,7 +30,8 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 						if (location.pathname.substring(location.pathname.lastIndexOf("/") + 1)=== "my_maps.html") {
 							
 							var viewDiv = document.querySelector('#modalBodyViewPic');
-							var img = btnDel.previousSibling;
+							var img = this.previousSibling;
+							console.log(this.parent);
 							var name = img.src.substring(img.src.lastIndexOf("/") + 1);
 							
 							axios.delete("image/delete/"+name) 
@@ -84,7 +85,7 @@ $('#photosModal').on("shown.bs.modal", function (evt) {
 });
 
 $('#photosModal').on("hidden.bs.modal", function (evt) {
-    //empty the div
+
 	var divView = document.querySelector('#modalBodyViewPic');
 	while (divView.hasChildNodes()) {
 		divView.removeChild(divView.lastChild);
