@@ -7,6 +7,8 @@ var currentMarker;
 var current_place;
 var formData = new FormData();
 var photoAdded = null;
+var curent_place_longitude = 0;
+var curent_place_latitude = 0;
 
 var formNewMap = document.querySelector("#form-newMap");
 
@@ -430,8 +432,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
                         itineraire.innerHTML = "Find Itinerary";//'<i class="fas fa-pencil-alt"></i>';
                         itineraire.addEventListener("click",function (e) {
                             var coordPlace =( e.target.nextSibling.innerHTML).split(",");
-                            console.log(coordPlace[0]);
-                            console.log(coordPlace[1]);
+                            routing(coordPlace[0],coordPlace[1]);
 
                         });
                         var coords = L.DomUtil.create('span', 'coords', newMarker);
@@ -518,6 +519,19 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
 	}
 	
 	$('#addPhotosModal').modal('hide');
+});
+
+map.on('locationfound', function (e) {
+    L.Routing.control({
+        waypoints: [
+            L.latLng(curent_place_latitude,curent_place_longitude),
+            L.latLng(e.latlng.lat,e.latlng.lng)
+
+        ]
+    }).addTo(map);
+});
+map.on('locationerror', function (e) {
+	console.log("error"+ e.message);
 });
 
     map.on('click', function(e) {
@@ -625,9 +639,7 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
                     itineraire.innerHTML = "Find Itinerary";//'<i class="fas fa-pencil-alt"></i>';
                     itineraire.addEventListener("click",function (e) {
                         var coordPlace =( e.target.nextSibling.innerHTML).split(",");
-                        console.log(coordPlace[0]);
-                        console.log(coordPlace[1]);
-
+                        routing(coordPlace[0],coordPlace[1]);
                     });
                     var coords = L.DomUtil.create('span', 'coords', newPopup);
                     coords.innerHTML =  e.latlng.lat +","+ e.latlng.lng ;
@@ -693,5 +705,13 @@ function createPlace() {
     btn.setAttribute('type', 'button');
     btn.innerHTML = label;
     formData.delete("file");
+}
+
+function routing(latitude , longitude) {
+    curent_place_longitude = longitude;
+    curent_place_latitude = latitude;
+   map.locate();
+
+
 }
 
