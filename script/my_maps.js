@@ -525,6 +525,9 @@ document.querySelector('#formPhotos').addEventListener("submit", function(e){
 	$('#addPhotosModal').modal('hide');
 });
 
+L.Routing.control({
+    geocoder: L.Control.Geocoder.nominatim()
+    }).addTo(map);
 map.on('locationfound', function (e) {
     L.Routing.control({
         waypoints: [
