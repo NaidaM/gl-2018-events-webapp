@@ -375,7 +375,11 @@ function deletePlace(idplace) {
 
 var map = L.map('mapid').setView([48.85, 2.35], 13);
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
-	
+/*
+var searchLayer = L.layerGroup().addTo(map);
+//... adding data in searchLayer ...
+map.addControl( new L.Control.Search({layer: searchLayer}) );*/
+
 	if (localStorage.getItem('current_map') !== null) {		
 		axios.get ("maps/"+JSON.parse(localStorage.getItem('current_map')).id+"/places") //get places
 			.then(function (response) {		
@@ -527,7 +531,8 @@ map.on('locationfound', function (e) {
             L.latLng(curent_place_latitude,curent_place_longitude),
             L.latLng(e.latlng.lat,e.latlng.lng)
 
-        ]
+        ],
+    geocoder: L.Control.Geocoder.nominatim()
     }).addTo(map);
 });
 map.on('locationerror', function (e) {
@@ -692,12 +697,6 @@ map.on('locationerror', function (e) {
             .openOn(map);
 
     });
-    /*<!-- L.Routing.control({ -->
-    <!-- waypoints: [ -->
-    <!-- L.latLng(48.74, 2.40), -->
-    <!-- L.latLng(48.1, 2.36) -->
-    <!-- ] -->
-    <!-- }).addTo(map); -->*/
 	
 	
 function createPlace() {
@@ -711,7 +710,5 @@ function routing(latitude , longitude) {
     curent_place_longitude = longitude;
     curent_place_latitude = latitude;
    map.locate();
-
-
 }
 
